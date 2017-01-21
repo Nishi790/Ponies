@@ -1,0 +1,11 @@
+Prompt1:Pinkie wants to meet me at 2?
+I wonder what she wants?:Display:1;
+Prompt2:If I'm meeting Pinkie, then I need you to do something for me.: Display:2;
+Prompt3:Can you deliver this gem to Spike for me?: Display:3, 4;
+Prompt4:Thanks a lot!: Display: 0;
+Prompt5:Oh. See you later.:Display:0;
+Response0:Goodbye: 0;
+Response1:I don't know: 2;
+Response2:What is it?:3;
+Response3:Sure!: 4:Item1;
+Response4:No.: 5;

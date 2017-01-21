@@ -1,0 +1,2 @@
+Prompt1: Shhh! I'm reading: Display:0;
+Response0: Goodbye:0;

@@ -1,0 +1,2 @@
+Prompt1: I really hope you manage to find Twilight.: Display:0;
+Response0: Goodbye: 0;

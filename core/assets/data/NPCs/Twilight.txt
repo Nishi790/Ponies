@@ -1,0 +1,5 @@
+TwilightTasks.txt;
+50;
+50;
+sprite_Twilight Walking1.png;
+50

@@ -1,0 +1,13 @@
+Prompt1: Hi! Have you seen Twilight?: Display: 1, 2;
+Prompt2: Can you ask her to come to the bakery at 2 o'clock?: Display: 3, 4;
+Prompt3: Well, it would be great if you could find her for me. 
+
+I want her to come to the bakery at 2, but I can't seem to find her anywhere!: Display: 3, 4;
+Prompt4: Thanks a billion! You're a great friend!: Display: 0;
+Prompt5: That's alright, I guess.: Display: 5, 0;
+Response0: Goodbye: 0;
+Response1: Yes: 2;
+Response2: No: 3;
+Response3: Sure: 4: Quest1;
+Response4: Sorry, I can't right now: 5;
+Response5: Alright, I'll do it.: 4: Quest1;

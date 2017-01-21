@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="grass" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+  <image source="Dirt and Grass.png" width="128" height="128"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2ZsXKDMBAFPUnt8f//bVKkyBATDD7praQttkqGk3cFNnC/3W73N/n45vHD3v/897dqes6i8buFPbJ8blqkemzn2yPX49n8o7XMSrrHdvara5mVVI+jDqs2SfQ402K1Pr16nPG8cpPWPa7s+ZXPleoeldee7W+to+PM0KeiR6vvgqvnTdppskfL7+Tq/mnXV3v8d12/6uTK2o72RjUVPs8e5521Pi4eo+Vna9GluittPb32Gs1DmqoOVT1WbdXSmT3W6LHXpse80fz0nmkP1kx7sGbagz1zFOzx+pqFQ0VL6j4d8fyY2Ys9WF7swfJiD5YXe7C82IPlxR4sL/bY95K6P7fJvptR5iYbpp8PSN3zkhH2nNcrlhd7sLzYg+XFHiwv9mB5sQfLiz1YXuzB8pLucfZ+L30/Kvu9Wu6lVc8PKvZgYQ8W9mDRy0vP78SR8fxgYQ8WSS82YTmxB8uJPVhORuqRfl4j+8+vZt2jz+5JEg4opD9zej6NtI/0fBppH+n5NNLXaXuwnNiD5cQeLCf2YDmxB8vJCj3O/mayxzmvwqDX+eL5wcIeLOzBwh4s7MEi5cQWLC/2YHmxB8uLPVhe7MHyYg+WF3uwvNiD5cUeLC/2YHmxB8uLPf76qH73RexR9d6v1zvI9HvQBFccz7ZPj/ZbYg1EZr9ejYY9WNiDhT1Y2IOFPVjYg4U9WNiDhT1Y2OM1vgDlI0zLQJwAAA==
+  </data>
+ </layer>
+</map>
