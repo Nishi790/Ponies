@@ -1,1 +1,1 @@
-SpikeDialog1.txt;SpikeDialog2.txt;
+SpikeDialog1.txt;SpikeDialog2.txt;SpikeDialog3.txt

@@ -102,13 +102,17 @@ public class Dialog {
 				if(temp[i].contains("Reward")){
 					for(Quest q:main.getActiveQuests()){
 						if(q.getNumber()==Integer.parseInt(temp[i].replace("Reward", ""))){
-							main.addGold(q.getGoldReward());
-							speaker.setCurrentFriendship(speaker.getCurrentFriendship()+q.getFriendshipReward());
-							if(!q.getItemReward().isEmpty()){
-								for(Item item:q.getItemReward()){
-									main.getInventory().add(item);
+							if(q.isComplete()){
+								main.addGold(q.getGoldReward());
+								speaker.setCurrentFriendship(speaker.getCurrentFriendship()+q.getFriendshipReward());
+								if(!q.getItemReward().isEmpty()){
+									for(Item item:q.getItemReward()){
+										main.getInventory().add(item);
+									}
 								}
+								speaker.setCurrentTask(speaker.getTaskNumber()+1);
 							}
+							
 						}
 					}
 				}

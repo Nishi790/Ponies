@@ -1,0 +1,2 @@
+Prompt1:Isn't Rarity just the most perfect pony?:Display:0;
+Response0:[click to exit]:0;

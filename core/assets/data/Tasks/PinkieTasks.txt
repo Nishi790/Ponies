@@ -1,1 +1,1 @@
-PinkieDialog1.txt;PinkieDialog2.txt;PinkieDialog3.txt;
+PinkieDialog1.txt;PinkieDialog2.txt;PinkieDialog3.txt;PinkieDialog4.txt;
