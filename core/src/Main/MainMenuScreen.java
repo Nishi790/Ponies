@@ -1,70 +1,123 @@
 package Main;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 public class MainMenuScreen implements Screen {
 	final Sim game;
-	Texture texture;
-	Texture aj;
-	OrthographicCamera camera;
-	Sprite[] sprites;
+	Stage stage;
+	Label welcome;
+	Label instructions;
+	ImageButton[] ponySelection;
+	Skin skin;
+	Table layout;
+	Table buttons;
 	
 	public MainMenuScreen(final Sim game){
 		this.game=game;
-		camera=new OrthographicCamera();
-		camera.setToOrtho(false);
-		texture= new Texture(Gdx.files.internal("data/Sprites/sprite_Pinkie pie1.png"));
-		aj=new Texture (Gdx.files.internal("data/Sprites/sprite_AppleJack1.png"));
-		Sprite applejack=new Sprite(aj);
-		Sprite pinkie= new Sprite(texture);
-		sprites=new Sprite[]{applejack, pinkie};
+		stage=new Stage(new ScalingViewport(Scaling.stretch, 640,480));
+		stage.getViewport().getCamera().position.x=0;
+		stage.getViewport().getCamera().position.y=0;
+		skin=new Skin(Gdx.files.internal("data/skin/terra-mother-ui.json"),
+				new TextureAtlas(Gdx.files.internal("data/skin/terra-mother-ui.atlas")));
+		skin.add("unicorn", 
+				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/sprite_generic unicorn walks1.png"))));
+		skin.add("pegasus", 
+				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/sprite_pegasus flying1.png"))));
+		skin.add("pegasusWalk", 
+				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/sprite_walking pegasus wings down1.png"))));
+		skin.add("pony", 
+				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/sprite_Generic pony walks1.png"))));
+
+		welcome=new Label("Welcome to PonyLife!", skin);
+		instructions=new Label("Select a pony to begin", skin);
+		ponySelection=new ImageButton[4];
+		ponySelection[0]=new ImageButton(new TextureRegionDrawable(skin.getRegion("unicorn")));
+		ponySelection[0].addListener(new ChangeListener(){
+
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new GameScreen(game,new Sprite(skin.getRegion("unicorn"))));
+			}
+		});
+		ponySelection[0].left();
+		ponySelection[1]=new ImageButton(new TextureRegionDrawable(skin.getRegion("pegasus")));
+		ponySelection[1].addListener(new ChangeListener(){
+
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new GameScreen(game,new Sprite(skin.getRegion("pegasus"))));
+			}
+		});
+		ponySelection[1].pad(10);
+		ponySelection[2]=new ImageButton(new TextureRegionDrawable(skin.getRegion("pegasusWalk")));
+		ponySelection[2].addListener(new ChangeListener(){
+
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new GameScreen(game,new Sprite(skin.getRegion("pegasusWalk"))));
+			}
+		});
+		ponySelection[2].pad(10);
+		ponySelection[3]=new ImageButton(new TextureRegionDrawable(skin.getRegion("pony")));
+		ponySelection[3].addListener(new ChangeListener(){
+
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				game.setScreen(new GameScreen(game,new Sprite(skin.getRegion("pony"))));
+			}
+		});
+		ponySelection[3].pad(10);
+		buttons=new Table(skin);
+		layout=new Table(skin);
+		createTable();
+		Gdx.input.setInputProcessor(stage);
+		stage.addActor(layout);
+		
+	}
+	
+	private void createTable(){
+		layout.add(welcome);
+		Cell<Label> a=layout.getCell(welcome);
+		a.center();
+		a.padBottom(5);
+		layout.row();
+		layout.add(instructions);
+		a=layout.getCell(instructions);
+		a.center();
+		a.padBottom(5);
+		layout.row();
+		layout.add(buttons);
+		buttons.add(ponySelection[0]);
+		buttons.add(ponySelection[1]);
+		buttons.add(ponySelection[2]);
+		buttons.add(ponySelection[3]);
 	}
 	
 	@Override
 	public void render(float delta){
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		sprites[0].setPosition(100, 100);
-		sprites[1].setPosition(200, 100);
-		
-		camera.update();
-		
-		game.batch.begin();
-		game.font.draw(game.batch, "Welcome to PonyLife", 
-				camera.viewportWidth/2-75, camera.viewportHeight/2+50);
-		game.font.draw(game.batch, "Select a pony to continue", 
-				camera.viewportWidth/2-75, camera.viewportHeight/2-50);
-		for(Sprite sprite:sprites){
-			sprite.draw(game.batch);
-		}
-		game.batch.end();
-		
-		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-			if(containsCursor(sprites[0].getBoundingRectangle())){
-				game.setScreen(new GameScreen(game,sprites[0]));
-				dispose();
-			}
-			if(containsCursor(sprites[1].getBoundingRectangle())){
-				game.setScreen(new GameScreen(game, sprites[1]));
-				dispose();
-			}
-		}
-		
-	}
-	//returns true if provided rectangle contains the current cursor position
-	public boolean containsCursor(Rectangle r){
-		if(r.contains(Gdx.input.getX(), Gdx.graphics.getHeight()-Gdx.input.getY()))
-			return true;
-		else return false;
+		layout.layout();
+
+		stage.draw();
+
 	}
 
 	@Override
@@ -99,7 +152,8 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		texture.dispose();
+		stage.dispose();
+		
 		
 	}
 	

@@ -76,36 +76,6 @@ public class Quest {
 		else given=true;
 		
 	}
-	
-	public void checkDialog(){
-		if(!talkedTo){
-			if(screen.getCurrentDialog().getSpeaker().getName().contains(target.getName())){
-				talkedTo=true;
-			}
-		}
-	}
-	
-	public void give(){
-		if(!given){
-			if(screen.getCurrentDialog().getSpeaker().getName().contains(recipient.getName())){
-				main.getInventory().remove(toBeGiven);
-				given=true;
-			}
-		}
-		
-	}
-	
-	public void checkComplete(){
-		checkDialog();
-		give();
-		if(talkedTo||given){
-			setComplete(true);
-			questgiver.setCurrentTask(questgiver.getTaskNumber()+1);
-			System.out.println(questgiver.getName()+"'s quest complete");
-		}		
-		
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -155,4 +125,33 @@ public class Quest {
 	}
 	
 	
+	public void checkDialog(){
+		if(!talkedTo){
+			if(screen.getCurrentDialog().getSpeaker().getName().contains(target.getName())){
+				talkedTo=true;
+			}
+		}
+	}
+	
+	public void give(){
+		if(!given){
+			if(screen.getCurrentDialog().getSpeaker().getName().contains(recipient.getName())){
+				main.getInventory().remove(toBeGiven);
+				given=true;
+			}
+		}
+		
+	}
+	
+	public void checkComplete(){
+		checkDialog();
+		give();
+		if(talkedTo||given){
+			setComplete(true);
+			questgiver.setCurrentTask(questgiver.getTaskNumber()+1);
+			System.out.println(questgiver.getName()+"'s quest complete");
+		}		
+		
+	}
 }
+	
