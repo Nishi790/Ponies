@@ -1,5 +1,5 @@
 PinkieTasks.txt;
 27;
 13;
-sprite_Pinkie pie1.png;
+pinkie.png;
 50

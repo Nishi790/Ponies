@@ -1,5 +1,5 @@
 spikeTasks.txt;
 10;
 10;
-sprite_Spike walking1.png;
+spike.png;
 25

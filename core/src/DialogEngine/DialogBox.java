@@ -3,10 +3,12 @@ package DialogEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -37,7 +39,8 @@ public class DialogBox {
 		skin=new Skin(Gdx.files.internal("data/skin/terra-mother-ui.json"),atlas);
 		
 		setChat(new com.badlogic.gdx.scenes.scene2d.ui.Dialog(n.getName(), skin));
-		getChat().text(current.displayPrompt());
+		getChat().getContentTable().add(current.displayPrompt());
+		addAvatar();
 		generateButtons();
 		getChat().pad(50);
 		getChat().show(getStage());
@@ -72,7 +75,18 @@ public class DialogBox {
 		buttons.clear();
 		generateButtons();
 		setPrompt(current.displayPrompt());
+		addAvatar();
 		
+	}
+	private void addAvatar(){
+		Image temp=new Image(new Texture(Gdx.files.internal("data/Sprites/"+speaker.getName().toLowerCase()+".png")));
+		Table avatar=new Table(skin);
+		getChat().getContentTable().add(avatar);
+		avatar.add(temp);
+		avatar.getCell(temp).minHeight(64);
+		avatar.getCell(temp).minWidth(64);
+		avatar.row();
+		avatar.add("Friendship: "+speaker.getCurrentFriendship()+"/100");
 	}
 	
 	public void dispose(){

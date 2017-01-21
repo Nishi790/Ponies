@@ -146,7 +146,7 @@ public class Quest {
 	public void checkComplete(){
 		checkDialog();
 		give();
-		if(talkedTo||given){
+		if(talkedTo&&given){
 			setComplete(true);
 			questgiver.setCurrentTask(questgiver.getTaskNumber()+1);
 			System.out.println(questgiver.getName()+"'s quest complete");
