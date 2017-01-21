@@ -1,6 +1,9 @@
-package Inventory;
+package inventory;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class Item {
 
@@ -9,6 +12,7 @@ public class Item {
 	int value;//in Gp
 	public String name;//string
 	private String description;
+	Image icon;
 	
 	
 	public Item(FileHandle f){
@@ -23,6 +27,7 @@ public class Item {
 		name=temp[0];
 		value=Integer.parseInt(temp[1].trim());
 		setDescription(temp[2]);
+		icon=new Image(new Texture(Gdx.files.internal("data/Items/"+name+itemID+".png")));
 	}
 
 	public String getDescription() {

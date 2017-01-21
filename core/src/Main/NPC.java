@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,9 +59,9 @@ public class NPC {
 		String[] list=encounters.split(";");	
 		return list;
 	}
-	public DialogEngine.Dialog getCurrentDialog(){
+	public dialogEngine.Dialog getCurrentDialog(){
 		String task=taskList[currentTask];
-		DialogEngine.Dialog talk=new DialogEngine.Dialog(Gdx.files.internal("data/Dialog/"+task), main, this,screen);
+		dialogEngine.Dialog talk=new dialogEngine.Dialog(Gdx.files.internal("data/Dialog/"+task), main, this,screen);
 		return talk;
 	}
 

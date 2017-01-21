@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import DialogEngine.DialogBox;
+import dialogEngine.DialogBox;
 
 public class GameScreen implements Screen, InputProcessor {
 	final Sim game;
@@ -28,10 +28,11 @@ public class GameScreen implements Screen, InputProcessor {
 	OrthogonalTiledMapRenderer tiledMapRenderer;
 	com.badlogic.gdx.files.FileHandle[] npcData;
 	public ArrayList<NPC> npcs;
-	private DialogEngine.Dialog currentDialog;
+	private dialogEngine.Dialog currentDialog;
 	public boolean inDialog=false;
 	DialogBox display;
 	BitmapFont font;
+	HUD hud;
 	
 	public GameScreen(final Sim game, Sprite pony){
 		this.game=game;
@@ -62,6 +63,7 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		//create input processor
 		Gdx.input.setInputProcessor(this);
+		hud=new HUD(main,this.game, this);
 	}
 	
 	
@@ -110,6 +112,7 @@ public class GameScreen implements Screen, InputProcessor {
 						main.getActiveQuests().get(i).checkComplete();
 					}
 				}
+				System.out.println("Dispose of Stage");
 				display.dispose();
 				display=null;
 				inDialog=false;
@@ -118,6 +121,8 @@ public class GameScreen implements Screen, InputProcessor {
 				display.getStage().draw();
 			}
 		}
+		hud.act();
+		hud.draw();
 		
 	}
 
@@ -257,18 +262,18 @@ public class GameScreen implements Screen, InputProcessor {
 				setCurrentDialog(n.getCurrentDialog());
 				inDialog=true;
 				currentDialog.setSpeaker(n);
-				display=new DialogBox(currentDialog, currentDialog.getSpeaker(), this, game.batch);
+				display=new DialogBox(currentDialog, currentDialog.getSpeaker(), game);
 			}	
 		}
 	}
 
 
-	public DialogEngine.Dialog getCurrentDialog() {
+	public dialogEngine.Dialog getCurrentDialog() {
 		return currentDialog;
 	}
 
 
-	public void setCurrentDialog(DialogEngine.Dialog currentDialog) {
+	public void setCurrentDialog(dialogEngine.Dialog currentDialog) {
 		this.currentDialog = currentDialog;
 	}
 

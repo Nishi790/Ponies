@@ -1,15 +1,15 @@
-package DialogEngine;
+package dialogEngine;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
-import Inventory.Item;
-import Main.GameScreen;
-import Main.MainChar;
-import Main.NPC;
-import Quests.Quest;
+import inventory.Item;
+import main.GameScreen;
+import main.MainChar;
+import main.NPC;
+import quests.Quest;
 
 public class Dialog {
 	ArrayList<String[]> prompts;
@@ -112,7 +112,6 @@ public class Dialog {
 								}
 								speaker.setCurrentTask(speaker.getTaskNumber()+1);
 							}
-							
 						}
 					}
 				}

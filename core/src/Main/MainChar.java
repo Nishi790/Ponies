@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import java.util.ArrayList;
 
@@ -6,14 +6,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import Inventory.Item;
-import Quests.Quest;
+import inventory.Item;
+import quests.Quest;
 
 public class MainChar {
 	Sprite avatar;
 	boolean moveLeft, moveRight, moveUp, moveDown;
-	int[] stats=new int[]{10,10,10,10};//sleep, hunger, fun, hygiene
-	int points=100; //special ability (fly/spells/earth pony???)
+	double[] stats=new double[]{10,10,10,10};//sleep, hunger, fun, hygiene
+	double[] points=new double[]{100,100,100}; //special ability (fly/spells/earth pony???);HP;MP
 	int gold=100;
 	ArrayList<NPC> npcsEncountered;
 	OrthoCamera camera;
