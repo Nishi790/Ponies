@@ -12,9 +12,9 @@ import quests.Quest;
 public class MainChar {
 	Sprite avatar;
 	boolean moveLeft, moveRight, moveUp, moveDown;
-	double[] stats=new double[]{10,10,10,10};//sleep, hunger, fun, hygiene
-	double[] points=new double[]{100,100,100}; //special ability (fly/spells/earth pony???);HP;MP
-	int gold=100;
+	private double[] stats=new double[]{10,10,10,10};//sleep, hunger, fun, hygiene
+	private double[] points=new double[]{100,100,100}; //special ability (fly/spells/earth pony???);HP;MP
+	private int gold=100;
 	ArrayList<NPC> npcsEncountered;
 	OrthoCamera camera;
 	ArrayList<Quest> activeQuests;
@@ -42,7 +42,7 @@ public class MainChar {
 		avatar.draw(b);
 	}
 	
-	public void addGold(int a){gold=gold+a;}
+	public void addGold(int a){setGold(getGold()+a);}
 
 	public void setMoveUp(boolean b) {
 		moveUp=b;		
@@ -79,5 +79,29 @@ public class MainChar {
 
 	public void setInventory(ArrayList<Item> inventory) {
 		this.inventory = inventory;
+	}
+
+	public double[] getStats() {
+		return stats;
+	}
+
+	public void setStats(double[] stats) {
+		this.stats = stats;
+	}
+
+	public double[] getPoints() {
+		return points;
+	}
+
+	public void setPoints(double[] points) {
+		this.points = points;
+	}
+
+	public int getGold() {
+		return gold;
+	}
+
+	public void setGold(int gold) {
+		this.gold = gold;
 	}
 }

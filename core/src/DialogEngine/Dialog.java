@@ -98,25 +98,26 @@ public class Dialog {
 				}
 				if(temp[i].contains("Item")){
 					main.getInventory().add(new Item(Gdx.files.internal("data/Items/"+temp[i].trim()+".txt")));
+					System.out.println(temp[i]+" gained");
 				}
 				if(temp[i].contains("Reward")){
 					for(Quest q:main.getActiveQuests()){
 						if(q.getNumber()==Integer.parseInt(temp[i].replace("Reward", ""))){
-							if(q.isComplete()){
-								main.addGold(q.getGoldReward());
-								speaker.setCurrentFriendship(speaker.getCurrentFriendship()+q.getFriendshipReward());
-								if(!q.getItemReward().isEmpty()){
-									for(Item item:q.getItemReward()){
-										main.getInventory().add(item);
-									}
+							main.addGold(q.getGoldReward());
+							speaker.setCurrentFriendship(speaker.getCurrentFriendship()+q.getFriendshipReward());
+							if(!q.getItemReward().isEmpty()){
+								for(Item item:q.getItemReward()){
+									main.getInventory().add(item);
+								
 								}
-								speaker.setCurrentTask(speaker.getTaskNumber()+1);
 							}
+							speaker.setCurrentTask(speaker.getTaskNumber()+1);
 						}
 					}
 				}
 			}
 		}
+		
 		int index=Integer.parseInt(temp[2].trim());
 		nextprompt=index-1;
 	}

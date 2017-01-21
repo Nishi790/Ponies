@@ -17,12 +17,14 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import dialogEngine.DialogBox;
+import inventory.Inventory;
 
 public class GameScreen implements Screen, InputProcessor {
 	final Sim game;
 	final MainChar main;
+	int screenHeight;
+	int screenWidth;
 	OrthoCamera camera;
-	ScreenViewport view;
 	TiledMap current;
 	TiledMapTileLayer base;
 	OrthogonalTiledMapRenderer tiledMapRenderer;
@@ -30,23 +32,28 @@ public class GameScreen implements Screen, InputProcessor {
 	public ArrayList<NPC> npcs;
 	private dialogEngine.Dialog currentDialog;
 	public boolean inDialog=false;
+	Inventory invi;
 	DialogBox display;
 	BitmapFont font;
 	HUD hud;
 	
 	public GameScreen(final Sim game, Sprite pony){
 		this.game=game;
+		screenHeight=Gdx.graphics.getHeight();
+		screenWidth=Gdx.graphics.getWidth();
+		
 		//load map
 		current=new TmxMapLoader().load("data/Maps/map.tmx");
 		float scale=1/16f;
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(current,scale);
 		base=(TiledMapTileLayer)current.getLayers().get(0);
+		
 		//set up camera
-		camera=new OrthoCamera(current);
-		camera.setToOrtho(false,25,25);
-		view=new ScreenViewport();
-		view.setUnitsPerPixel(1/16);
-		view.setScreenSize(25,25);
+		camera=new OrthoCamera(base);
+		camera.setToOrtho(false,screenWidth/32,screenHeight/32);
+		camera.position.set(camera.viewportWidth/2f, camera.viewportHeight/2f, 0);
+		camera.update();
+		
 		//create characters
 		main=new MainChar(pony, camera);
 		npcs=new ArrayList<NPC>();
@@ -123,6 +130,9 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		hud.act();
 		hud.draw();
+		if(invi!=null){
+			invi.getStage().draw();
+		}
 		
 	}
 
@@ -176,7 +186,11 @@ public class GameScreen implements Screen, InputProcessor {
 			dispose();
 			game.dispose();
 			break;
+		case Input.Keys.I:
+			invi=new Inventory(main, game);
+			invi.getDisplay().show(invi.getStage());
 		}
+
 		return false;
 	}
 

@@ -17,23 +17,26 @@ import main.Sim;
 public class Inventory {
 	final MainChar main;
 	final Sim game;
-	Dialog display;
-	Stage stage;
+	private Dialog display;
+	private Stage stage;
 	Skin skin;
 	
-	public Inventory(MainChar m, Sim g, Stage s){
+	public Inventory(MainChar m, Sim g){
 		main=m;
 		game=g;
 		skin=game.skin;
-		stage=s;
-		display=new Dialog("Inventory", skin);
-		display.pad(20);
-		for(Item i:main.getInventory()){
-			Table content=display.getContentTable();
-			content.add(i.name);
-			content.add(i.icon);
+		setStage(new Stage());
+		setDisplay(new Dialog("Inventory", skin));
+		for(int i=0;i<main.getInventory().size();i++){
+			Table content=getDisplay().getContentTable();
+			Item temp=main.getInventory().get(i);
+			content.add(temp.name);
+			content.add(temp.icon);
 			content.row();
 		}
+		display.padTop(50);
+		display.padLeft(20);
+		display.padRight(20);
 		TextButton button=new TextButton("Return to Game", skin);
 		button.addListener(new ChangeListener(){
 
@@ -43,15 +46,32 @@ public class Inventory {
 			}
 			
 		});
-		display.button(button);
-		Gdx.input.setInputProcessor(stage);
+		getDisplay().button(button);
+		Gdx.input.setInputProcessor(getStage());
 	}
 	
 	public void draw(){
-		display.draw(stage.getBatch(), 1);
+		getDisplay().draw(getStage().getBatch(), 1);
 	}
 	
 	public void dispose(){
 		Gdx.input.setInputProcessor((InputProcessor) game.getScreen());
+		stage.dispose();
+	}
+
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
+	public Dialog getDisplay() {
+		return display;
+	}
+
+	public void setDisplay(Dialog display) {
+		this.display = display;
 	}
 }
