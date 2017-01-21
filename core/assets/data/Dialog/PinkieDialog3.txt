@@ -1,0 +1,4 @@
+Prompt1: Thanks for doing that! Here's something for your trouble.:Display:1;
+Prompt2: Talk to you later!!:Display:0;
+Response0: Goodbye.:0;
+Response1:Thanks Pinkie.:2:Reward1;

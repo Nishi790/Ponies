@@ -18,7 +18,6 @@ public class MainChar {
 	ArrayList<NPC> npcsEncountered;
 	OrthoCamera camera;
 	ArrayList<Quest> activeQuests;
-	ArrayList<Quest> completedQuests;
 	private ArrayList<Item> inventory;
 	
 	public MainChar(Sprite av, OrthoCamera camera){
@@ -32,16 +31,11 @@ public class MainChar {
 		avatar.setCenter(camera.viewportWidth/2, camera.viewportHeight/2);
 		avatar.scale(-23/24f);
 		activeQuests=new ArrayList<Quest>();
-		completedQuests=new ArrayList<Quest>();
 		setInventory(new ArrayList<Item>());
 	}
 	
 	public ArrayList<Quest> getActiveQuests(){
 		return activeQuests;
-	}
-	
-	public ArrayList<Quest> getCompletedQuests(){
-		return completedQuests;
 	}
 	
 	public void draw(Batch b){
@@ -78,14 +72,6 @@ public class MainChar {
 		}
 	}
 	
-	public void updateQuests(){
-		for(Quest q:activeQuests){
-			if(q.isComplete()){
-				completedQuests.add(q);
-				activeQuests.remove(q);
-			}
-		}
-	}
 
 	public ArrayList<Item> getInventory() {
 		return inventory;

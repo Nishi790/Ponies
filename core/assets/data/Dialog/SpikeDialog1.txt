@@ -1,0 +1,2 @@
+Prompt1:*Gurgle* I'm HUUUUNGRY:Display:0;
+Response0:[Click to Exit]:0;

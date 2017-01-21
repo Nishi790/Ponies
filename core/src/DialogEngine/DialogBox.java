@@ -91,7 +91,6 @@ public class DialogBox {
 		getStage().clear();
 		Gdx.input.setInputProcessor((InputProcessor) screen);
 		getStage().dispose();
-		System.out.println("Stage disposed");
 	}
 
 

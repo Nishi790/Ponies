@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 public class NPC {
 	Sprite avatar;
 	int maxFriendship;
-	int currentFriendship;
+	private int currentFriendship;
 	int xPos, yPos;
 	String data;
 	FileHandle tasks;
@@ -51,7 +51,7 @@ public class NPC {
 		avatar=new Sprite(sprite);
 		avatar.setCenter(xPos, yPos);
 		avatar.scale(-23/24f);
-		currentFriendship=Integer.parseInt(input[4].trim());
+		setCurrentFriendship(Integer.parseInt(input[4].trim()));
 		
 	}
 	public String[] readTasks(){
@@ -71,6 +71,14 @@ public class NPC {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getCurrentFriendship() {
+		return currentFriendship;
+	}
+
+	public void setCurrentFriendship(int currentFriendship) {
+		this.currentFriendship = currentFriendship;
 	}
 	
 }

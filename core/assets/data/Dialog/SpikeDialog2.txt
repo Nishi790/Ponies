@@ -1,0 +1,8 @@
+Prompt1:A Diamond! Awesome!
+
+Twilight always says a growing dragon needs his gems.:Display:1;
+Prompt1:Mmmmm, you know who always has the best gems?
+
+Rarity...:Display:0;
+Response0:Goodbye:0;
+Response1:Always glad to help:2:Reward2;

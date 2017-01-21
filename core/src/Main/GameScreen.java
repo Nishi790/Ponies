@@ -82,7 +82,6 @@ public class GameScreen implements Screen, InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		//update necessary things
-		main.updateQuests();
 		main.updatePos();
 		block();
 		camera.position.set(main.avatar.getX()+main.avatar.getWidth()/2, main.avatar.getY()+main.avatar.getHeight()/2, 0);
@@ -109,12 +108,14 @@ public class GameScreen implements Screen, InputProcessor {
 		if(inDialog){
 			display.getChat().show(display.getStage());
 			if(display.getPrompt()=="close"){
-				for(Quest q: main.getActiveQuests()){
-					q.checkDialog();
+				int j=main.getActiveQuests().size();
+				for(int i=0;i<j;i++){
+					if(!main.getActiveQuests().get(i).isComplete()){
+						main.getActiveQuests().get(i).checkComplete();
+					}
 				}
 				display.dispose();
 				display=null;
-				
 				inDialog=false;
 			}
 			else{
@@ -259,7 +260,8 @@ public class GameScreen implements Screen, InputProcessor {
 				}
 				setCurrentDialog(n.getCurrentDialog());
 				inDialog=true;
-				display=new DialogBox(getCurrentDialog(), getCurrentDialog().getSpeaker(), this, game.batch);
+				currentDialog.setSpeaker(n);
+				display=new DialogBox(currentDialog, currentDialog.getSpeaker(), this, game.batch);
 			}	
 		}
 	}

@@ -90,13 +90,28 @@ public class Dialog {
 		}
 		String[] temp=resps[b];
 		//check if this response triggers quest creation or adds an item to inventory
-		if(temp.length==4){
-			if(temp[3].contains("Quest")){
-				main.getActiveQuests().add(new Quest(Gdx.files.internal("data/Quests/"+temp[3].trim()+".txt"),screen));
-				getSpeaker().setCurrentTask(getSpeaker().getTaskNumber()+1);
-			}
-			if(temp[3].contains("Item")){
-				main.getInventory().add(new Item(Gdx.files.internal("data/Items/"+temp[3].trim()+".txt")));
+		if(temp.length>=4){
+			for(int i=3; i<temp.length;i++){
+				if(temp[i].contains("Quest")){
+					main.getActiveQuests().add(new Quest(Gdx.files.internal("data/Quests/"+temp[i].trim()+".txt"),screen, main));
+					getSpeaker().setCurrentTask(getSpeaker().getTaskNumber()+1);
+				}
+				if(temp[i].contains("Item")){
+					main.getInventory().add(new Item(Gdx.files.internal("data/Items/"+temp[i].trim()+".txt")));
+				}
+				if(temp[i].contains("Reward")){
+					for(Quest q:main.getActiveQuests()){
+						if(q.getNumber()==Integer.parseInt(temp[i].replace("Reward", ""))){
+							main.addGold(q.getGoldReward());
+							speaker.setCurrentFriendship(speaker.getCurrentFriendship()+q.getFriendshipReward());
+							if(!q.getItemReward().isEmpty()){
+								for(Item item:q.getItemReward()){
+									main.getInventory().add(item);
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		int index=Integer.parseInt(temp[2].trim());
