@@ -27,7 +27,6 @@ public class GameScreen implements Screen, InputProcessor {
 	TiledMap current;
 	TiledMapTileLayer base;
 	OrthogonalTiledMapRenderer tiledMapRenderer;
-	com.badlogic.gdx.files.FileHandle[] npcData;
 	public ArrayList<NPC> npcs;
 	private dialogEngine.Dialog currentDialog;
 	public boolean inDialog=false;
@@ -64,17 +63,18 @@ public class GameScreen implements Screen, InputProcessor {
 		//create characters
 		main=new MainChar(pony, camera);
 		npcs=new ArrayList<NPC>();
-		npcData=new com.badlogic.gdx.files.FileHandle[]{Gdx.files.internal("data/NPCs/Pinkie.txt"), 
-				Gdx.files.internal("data/NPCs/Spike.txt"), Gdx.files.internal("data/NPCs/Twilight.txt")};
-		for(com.badlogic.gdx.files.FileHandle f: npcData){
+		String[] s=Gdx.files.internal("data/Maps/NPCs.txt").readString().split(";");
+		for(String t:s){
 			try {
-				NPC n=new NPC(f.readString(),f, main, this);
+				NPC n=new NPC(Gdx.files.internal("data/NPCs/"+t), main, this);
 				npcs.add(n);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}	
+			}
+
 		}
+		
 		//create input processor
 		Gdx.input.setInputProcessor(this);
 		hud=new HUD(main,this.game, this);

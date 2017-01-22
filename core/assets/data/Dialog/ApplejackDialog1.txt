@@ -1,0 +1,2 @@
+Prompt1:Howdy Sugarcube!:Display:0;
+Response0:Hi Applejack.:0;

@@ -37,13 +37,13 @@ public class MainMenuScreen implements Screen {
 		skin=new Skin(Gdx.files.internal("data/skin/terra-mother-ui.json"),
 				new TextureAtlas(Gdx.files.internal("data/skin/terra-mother-ui.atlas")));
 		skin.add("unicorn", 
-				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/sprite_generic unicorn walks1.png"))));
+				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/VinylScratch.png"))));
 		skin.add("pegasus", 
-				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/sprite_pegasus flying1.png"))));
+				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/Derpy.png"))));
 		skin.add("pegasusWalk", 
-				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/sprite_walking pegasus wings down1.png"))));
+				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/Drizzle.png"))));
 		skin.add("pony", 
-				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/sprite_Generic pony walks1.png"))));
+				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/EarthPony.png"))));
 
 		welcome=new Label("Welcome to PonyLife!", skin);
 		instructions=new Label("Select a pony to begin", skin);

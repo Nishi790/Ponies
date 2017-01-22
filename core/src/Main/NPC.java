@@ -20,11 +20,11 @@ public class NPC {
 	final MainChar main;
 	final GameScreen screen;
 	
-	public NPC(String data, FileHandle f, MainChar main, GameScreen screen) throws FileNotFoundException{
+	public NPC(FileHandle f, MainChar main, GameScreen screen) throws FileNotFoundException{
 		this.main=main;
 		this.screen=screen;
 		maxFriendship=100;
-		this.data=data;
+		data=f.readString();
 		parseData();
 		currentTask=0;
 		taskList=readTasks();

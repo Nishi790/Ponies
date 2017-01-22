@@ -1,1 +1,1 @@
-TwilightDialog1.txt;TwilightDialog2.txt;
+TwilightDialog1.txt;TwilightDialog2.txt;TwilightDialog3.txt;

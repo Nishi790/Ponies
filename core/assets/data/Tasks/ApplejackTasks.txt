@@ -1,0 +1,1 @@
+ApplejackDialog1.txt;ApplejackDialog2.txt;ApplejackDialog3.txt

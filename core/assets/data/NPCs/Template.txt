@@ -1,0 +1,6 @@
+Template
+XTasks.txt; //File containing list of dialog files
+X //XPosition
+Y //YPosition
+sprite.png //name of sprite
+F //starting friendship (out of 100)

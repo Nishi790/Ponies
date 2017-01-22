@@ -34,12 +34,12 @@ public class Furniture {
 		message=info[4];
 		cost=Integer.parseInt(info[5]);
 		image.setPosition(Float.parseFloat(info[6]),Float.parseFloat(info[7]));
-		image.setSize(1,1);
+		image.setSize(image.getWidth()/32,image.getHeight()/32);
 	}
 	
 	public void interactWith(){
 		final Dialog display=new Dialog(name,location.game.skin);
-		display.pad(20);
+		display.pad(50);
 		display.text(message);
 		TextButton button=new TextButton("Yes", location.game.skin);
 		button.addListener(new ChangeListener(){

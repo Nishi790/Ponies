@@ -1,0 +1,3 @@
+PromptX: Whatever they say:Display:Which responses are possible;
+Response0:Whatever leads to exiting conversation:0;
+ResponseX: Possible Response:NextPrompt#:QuestX;//name of quest file to retrieve, could be ItemX for item given to character

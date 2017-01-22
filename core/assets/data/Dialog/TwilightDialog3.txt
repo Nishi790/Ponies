@@ -1,0 +1,2 @@
+Prompt1:I know, I'll go see Pinkie at 2.:Display:0;
+Response0:That's good.:0;
