@@ -16,7 +16,8 @@ public class HUD {
 	Table overall;
 	final Sim game;
 	final MainChar main;
-	final GameScreen screen;
+	GameScreen screen;
+	InteriorScreen screen2;
 	Table[] current;
 	Table needTable;
 	Label gold;
@@ -26,6 +27,22 @@ public class HUD {
 		this.main=main;
 		this.game=game;
 		this.screen=s;
+		stage=new Stage(new ScalingViewport(Scaling.none, 1024, 768),game.batch);
+		current=new Table[main.getStats().length+main.getPoints().length];
+		buildStatMonitors();
+		needTable=new Table(this.game.skin);
+		constructNeedTable();
+		needTable.pad(20);
+		needTable.left();
+		needTable.moveBy(0, 670);
+		stage.addActor(needTable);
+
+	}
+	
+	public HUD(MainChar main, Sim game, InteriorScreen s){
+		this.main=main;
+		this.game=game;
+		this.screen2=s;
 		stage=new Stage(new ScalingViewport(Scaling.none, 1024, 768),game.batch);
 		current=new Table[main.getStats().length+main.getPoints().length];
 		buildStatMonitors();
@@ -142,6 +159,11 @@ public class HUD {
 				new StatTracker(gold,7,this.game, this.main),
 				Actions.delay(delayTime));
 		gold.addAction(t);
+	}
+
+	public void dispose() {
+		stage.dispose();
+		
 	}
 	
 	

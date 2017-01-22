@@ -1,0 +1,1 @@
+SugarCube Corner.png;20;25;SugarCubeCorner.tmx;

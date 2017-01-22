@@ -15,6 +15,7 @@ public class Sim extends Game {
 	BitmapFont font;
 	AssetManager manager;
 	public Skin skin;
+	GameScreen main;
 	
 	@Override
 	public void create () {

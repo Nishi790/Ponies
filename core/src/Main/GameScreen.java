@@ -17,6 +17,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import dialogEngine.DialogBox;
+import interactable.Building;
 import inventory.Inventory;
 
 public class GameScreen implements Screen, InputProcessor {
@@ -36,6 +37,8 @@ public class GameScreen implements Screen, InputProcessor {
 	DialogBox display;
 	BitmapFont font;
 	HUD hud;
+	ArrayList<Building> buildings;
+	
 	
 	public GameScreen(final Sim game, Sprite pony){
 		this.game=game;
@@ -44,6 +47,12 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		//load map
 		current=new TmxMapLoader().load("data/Maps/map.tmx");
+		buildings=new ArrayList<Building>();
+		String[] temporary=Gdx.files.internal("data/Maps/mapBuildings.txt").readString().split(":");
+		for(String s:temporary){
+			Building b=new Building(Gdx.files.internal("data/Buildings/"+s));
+			buildings.add(b);
+		}
 		float scale=1/16f;
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(current,scale);
 		base=(TiledMapTileLayer)current.getLayers().get(0);
@@ -73,7 +82,6 @@ public class GameScreen implements Screen, InputProcessor {
 		hud=new HUD(main,this.game, this);
 	}
 	
-	
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
@@ -83,7 +91,7 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public void render(float delta) {
 		//clear screen
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		//update necessary things
@@ -106,6 +114,11 @@ public class GameScreen implements Screen, InputProcessor {
 		if (!npcs.isEmpty()){
 			for(NPC n: npcs){
 				n.avatar.draw(game.batch);
+			}
+		}
+		if(!buildings.isEmpty()){
+			for(Building b: buildings){
+				b.getSprite().draw(game.batch);
 			}
 		}
 		
@@ -278,6 +291,31 @@ public class GameScreen implements Screen, InputProcessor {
 				currentDialog.setSpeaker(n);
 				display=new DialogBox(currentDialog, currentDialog.getSpeaker(), game);
 			}	
+		}
+		if(!buildings.isEmpty()){
+			for(Building b:buildings){
+				if(main.avatar.getBoundingRectangle().overlaps(b.getSprite().getBoundingRectangle())){
+					if(main.moveDown){
+						main.setMoveDown(false);
+						main.avatar.setY(main.avatar.getY()+10*Gdx.graphics.getDeltaTime());
+					
+					}
+					if(main.moveUp){
+						main.setMoveUp(false);
+						main.avatar.setY(main.avatar.getY()-10*Gdx.graphics.getDeltaTime());
+						b.enter(main, game);
+					
+					}
+					if(main.moveLeft){
+						main.setMoveLeft(false);
+						main.avatar.setX(main.avatar.getX()+10*Gdx.graphics.getDeltaTime());
+					}
+					if(main.moveRight){
+						main.setMoveRight(false);
+						main.avatar.setX(main.avatar.getX()-10*Gdx.graphics.getDeltaTime());
+					}
+				}
+			}
 		}
 	}
 

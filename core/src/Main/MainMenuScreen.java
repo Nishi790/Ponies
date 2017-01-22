@@ -53,7 +53,8 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new GameScreen(game,new Sprite(skin.getRegion("unicorn"))));
+				game.main=new GameScreen(game,new Sprite(skin.getRegion("unicorn")));
+				game.setScreen(game.main);
 			}
 		});
 		ponySelection[0].left();
@@ -62,7 +63,8 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new GameScreen(game,new Sprite(skin.getRegion("pegasus"))));
+				game.main=new GameScreen(game,new Sprite(skin.getRegion("pegasus")));
+				game.setScreen(game.main);
 			}
 		});
 		ponySelection[1].pad(10);
@@ -71,7 +73,8 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new GameScreen(game,new Sprite(skin.getRegion("pegasusWalk"))));
+				game.main=new GameScreen(game,new Sprite(skin.getRegion("pegasusWalk")));
+				game.setScreen(game.main);
 			}
 		});
 		ponySelection[2].pad(10);
@@ -80,7 +83,8 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.setScreen(new GameScreen(game,new Sprite(skin.getRegion("pony"))));
+				game.main=new GameScreen(game,new Sprite(skin.getRegion("pony")));
+				game.setScreen(game.main);
 			}
 		});
 		ponySelection[3].pad(10);
