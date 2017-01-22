@@ -5,14 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 import inventory.StatTracker;
 
 public class HUD {
-	Stage stage;
+	private Stage stage;
 	Table overall;
 	final Sim game;
 	final MainChar main;
@@ -27,7 +26,7 @@ public class HUD {
 		this.main=main;
 		this.game=game;
 		this.screen=s;
-		stage=new Stage(new ScalingViewport(Scaling.none, 1024, 768),game.batch);
+		setStage(new Stage(new ScalingViewport(Scaling.none, 1024, 768),game.batch));
 		current=new Table[main.getStats().length+main.getPoints().length];
 		buildStatMonitors();
 		needTable=new Table(this.game.skin);
@@ -35,7 +34,7 @@ public class HUD {
 		needTable.pad(20);
 		needTable.left();
 		needTable.moveBy(0, 670);
-		stage.addActor(needTable);
+		getStage().addActor(needTable);
 
 	}
 	
@@ -43,7 +42,7 @@ public class HUD {
 		this.main=main;
 		this.game=game;
 		this.screen2=s;
-		stage=new Stage(new ScalingViewport(Scaling.none, 1024, 768),game.batch);
+		setStage(new Stage(new ScalingViewport(Scaling.none, 1024, 768),game.batch));
 		current=new Table[main.getStats().length+main.getPoints().length];
 		buildStatMonitors();
 		needTable=new Table(this.game.skin);
@@ -51,19 +50,19 @@ public class HUD {
 		needTable.pad(20);
 		needTable.left();
 		needTable.moveBy(0, 670);
-		stage.addActor(needTable);
+		getStage().addActor(needTable);
 
 	}
 	
 	public void act(){
-		stage.act();
+		getStage().act();
 
 
 	}
 	
 	public void draw(){
 		
-		stage.draw();
+		getStage().draw();
 	}
 	
 	private void constructNeedTable(){
@@ -162,8 +161,16 @@ public class HUD {
 	}
 
 	public void dispose() {
-		stage.dispose();
+		getStage().dispose();
 		
+	}
+
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 	
 	

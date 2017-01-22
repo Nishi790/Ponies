@@ -7,5 +7,5 @@ Prompt5:Oh. See you later.:Display:0;
 Response0:Goodbye: 0;
 Response1:I don't know: 2;
 Response2:What is it?:3;
-Response3:Sure!: 4:Item1:Quest2;
+Response3:Sure!: 4:Quest2;
 Response4:No.: 5;

@@ -1,16 +1,10 @@
 package main;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.util.Scanner;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 
 public class NPC {
 	Sprite avatar;

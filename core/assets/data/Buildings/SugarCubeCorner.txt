@@ -1,1 +1,1 @@
-SugarCube Corner.png;20;25;SugarCubeCorner.tmx;
+SugarCube Corner.png;20;25;SugarCubeCorner.tmx;Cupcake Counter.txt

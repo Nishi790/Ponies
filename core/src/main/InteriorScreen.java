@@ -1,47 +1,48 @@
 package main;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
-
 import dialogEngine.DialogBox;
-import interactable.Building;
+import interactable.Furniture;
 import inventory.Inventory;
 
 public class InteriorScreen implements Screen, InputProcessor {
 	float xEntrance, yEntrance;
 	int screenHeight, screenWidth;
 	float origX,origY;
-	final Sim game;
+	public final Sim game;
 	final TiledMap current;
 	OrthogonalTiledMapRenderer tiledMapRenderer;
 	TiledMapTileLayer base;
 	OrthoCamera camera;
-	final MainChar main;
+	private final MainChar main;
 	ArrayList<NPC> npcs;
 	DialogBox display;
-	HUD hud;
+	private HUD hud;
 	boolean inDialog;
 	Inventory invi;
+	ArrayList<Furniture> furnishing;
+	private boolean alert;
+	private Furniture interactee;
 
 	
-	public InteriorScreen(final Sim game, MainChar main, TiledMap map){
+	public InteriorScreen(final Sim game, MainChar main, TiledMap map, ArrayList<String> inside){
 		this.game=game;
 		screenHeight=Gdx.graphics.getHeight();
 		screenWidth=Gdx.graphics.getWidth();
+		furnishing=new ArrayList<Furniture>();
+		for(String s:inside){
+			furnishing.add(new Furniture(this, Gdx.files.internal(s)));
+		}
 		
 		//load map
 		current=map;
@@ -75,7 +76,7 @@ public class InteriorScreen implements Screen, InputProcessor {
 		//}
 		//create input processor
 		Gdx.input.setInputProcessor(this);
-		hud=new HUD(main,this.game, this);
+		setHud(new HUD(main,this.game, this));
 	}
 
 
@@ -83,30 +84,30 @@ public class InteriorScreen implements Screen, InputProcessor {
 	public boolean keyDown(int keycode) {
 		switch(keycode){
 		case Input.Keys.UP: 
-			main.setMoveUp(true);
-			main.setMoveDown(false);
+			getMain().setMoveUp(true);
+			getMain().setMoveDown(false);
 			break;
 		case Input.Keys.DOWN:
-			main.setMoveDown(true);
-			main.setMoveUp(false);
+			getMain().setMoveDown(true);
+			getMain().setMoveUp(false);
 			break;
 		case Input.Keys.LEFT: 
-			main.setMoveLeft(true);
-			main.setMoveRight(false);
+			getMain().setMoveLeft(true);
+			getMain().setMoveRight(false);
 			break;
 		case Input.Keys.RIGHT: 
-			main.setMoveRight(true);
-			main.setMoveLeft(false);
+			getMain().setMoveRight(true);
+			getMain().setMoveLeft(false);
 			break;
 		case Input.Keys.ESCAPE:
 			dispose();
 			game.dispose();
 			break;
 		case Input.Keys.I:
-			invi=new Inventory(main, game);
+			invi=new Inventory(getMain(), game);
 			invi.getDisplay().show(invi.getStage());
 		case Input.Keys.E:
-			main.avatar.setPosition(origX, origY);
+			getMain().avatar.setPosition(origX, origY);
 			game.setScreen(game.main);
 			break;
 		}
@@ -118,13 +119,13 @@ public class InteriorScreen implements Screen, InputProcessor {
 	public boolean keyUp(int keycode) {
 		switch(keycode){
 		case Input.Keys.UP:
-			main.setMoveUp(false);
+			getMain().setMoveUp(false);
 		case Input.Keys.DOWN:
-			main.setMoveDown(false);
+			getMain().setMoveDown(false);
 		case Input.Keys.LEFT:
-			main.setMoveLeft(false);
+			getMain().setMoveLeft(false);
 		case Input.Keys.RIGHT:
-			main.setMoveRight(false);
+			getMain().setMoveRight(false);
 		}
 		return false;
 	}
@@ -186,9 +187,9 @@ public class InteriorScreen implements Screen, InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		//update necessary things
-		main.updatePos();
+		getMain().updatePos();
 		clamp();
-		//block();
+		block();
 		camera.update();
 		
 		//render map
@@ -200,23 +201,27 @@ public class InteriorScreen implements Screen, InputProcessor {
 				
 		//actual drawing
 		game.batch.begin();
-		main.draw(game.batch);
+		getMain().draw(game.batch);
 		if (!npcs.isEmpty()){
 			for(NPC n: npcs){
 				n.avatar.draw(game.batch);
+			}
+		}
+		if (!furnishing.isEmpty()){
+			for(Furniture f: furnishing){
+				f.getImage().draw(game.batch);
 			}
 		}
 		game.batch.end();
 		if(inDialog){
 			display.getChat().show(display.getStage());
 			if(display.getPrompt()=="close"){
-				int j=main.getActiveQuests().size();
+				int j=getMain().getActiveQuests().size();
 				for(int i=0;i<j;i++){
-					if(!main.getActiveQuests().get(i).isComplete()){
-						main.getActiveQuests().get(i).checkComplete();
+					if(!getMain().getActiveQuests().get(i).isComplete()){
+						getMain().getActiveQuests().get(i).checkComplete();
 					}
 				}
-				System.out.println("Dispose of Stage");
 				display.dispose();
 				display=null;
 				inDialog=false;
@@ -225,8 +230,11 @@ public class InteriorScreen implements Screen, InputProcessor {
 				display.getStage().draw();
 			}
 		}
-		hud.act();
-		hud.draw();
+		if(isAlert()){
+			getInteractee().getStage().draw();
+		}
+		getHud().act();
+		getHud().draw();
 		if(invi!=null){
 			invi.getStage().draw();
 		}
@@ -256,7 +264,7 @@ public class InteriorScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
-		hud.dispose();
+		getHud().dispose();
 		tiledMapRenderer.dispose();
 		current.dispose();
 		
@@ -270,18 +278,81 @@ public class InteriorScreen implements Screen, InputProcessor {
 	}
 	
 	public void clamp(){
-		if(main.avatar.getX()>2*base.getWidth()-camera.viewportWidth/2){
-			main.avatar.setX(2f*base.getWidth()-camera.viewportWidth/2);
+		if(getMain().avatar.getX()>2*base.getWidth()-camera.viewportWidth/2){
+			getMain().avatar.setX(2f*base.getWidth()-camera.viewportWidth/2);
 		}
-		if(main.avatar.getX()<-(camera.viewportWidth/2)){
-			main.avatar.setX(-(camera.viewportWidth/2));
+		if(getMain().avatar.getX()<-(camera.viewportWidth/2)){
+			getMain().avatar.setX(-(camera.viewportWidth/2));
 		}
-		if(main.avatar.getY()<-camera.viewportHeight/2f-4f){
-			main.avatar.setY(-camera.viewportHeight/2f-4f);
+		if(getMain().avatar.getY()<-camera.viewportHeight/2f-4f){
+			getMain().avatar.setY(-camera.viewportHeight/2f-4f);
 		}
-		if(main.avatar.getY()>2*base.getHeight()-main.avatar.getHeight()/2){
-			main.avatar.setY(2*base.getHeight()-main.avatar.getHeight()/2);
+		if(getMain().avatar.getY()>2*base.getHeight()-getMain().avatar.getHeight()/2){
+			getMain().avatar.setY(2*base.getHeight()-getMain().avatar.getHeight()/2);
 		}
+	}
+	
+	public void block(){
+		for(Furniture n: furnishing){
+			if(n.getImage().getBoundingRectangle().overlaps(main.avatar.getBoundingRectangle())){
+				if(main.moveDown){
+					main.setMoveDown(false);
+					main.avatar.setY(main.avatar.getY()+10*Gdx.graphics.getDeltaTime());
+					
+				}
+				if(main.moveUp){
+					main.setMoveUp(false);
+					main.avatar.setY(main.avatar.getY()-10*Gdx.graphics.getDeltaTime());
+					
+				}
+				if(main.moveLeft){
+					main.setMoveLeft(false);
+					main.avatar.setX(main.avatar.getX()+10*Gdx.graphics.getDeltaTime());
+				}
+				if(main.moveRight){
+					main.setMoveRight(false);
+					main.avatar.setX(main.avatar.getX()-10*Gdx.graphics.getDeltaTime());
+				}
+				setAlert(true);
+				setInteractee(n);
+				n.interactWith();
+			}	
+		}
+	}
+
+
+	public HUD getHud() {
+		return hud;
+	}
+
+
+	public void setHud(HUD hud) {
+		this.hud = hud;
+	}
+
+
+	public MainChar getMain() {
+		return main;
+	}
+
+
+	public Furniture getInteractee() {
+		return interactee;
+	}
+
+
+	public void setInteractee(Furniture interactee) {
+		this.interactee = interactee;
+	}
+
+
+	public boolean isAlert() {
+		return alert;
+	}
+
+
+	public void setAlert(boolean alert) {
+		this.alert = alert;
 	}
 	
 }

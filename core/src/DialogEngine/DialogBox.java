@@ -47,8 +47,7 @@ public class DialogBox {
 
 	private void generateButtons(){
 		Table buttons=getChat().getButtonTable();
-		int j=0;
-		for(int i:current.possibleResponses){
+		for(int j=0;j<current.possibleResponses.size();j++){
 			final int d=j;
 			TextButton button=new TextButton(current.displayResponses()[j],skin);
 			button.addListener(new ChangeListener(){
@@ -60,7 +59,6 @@ public class DialogBox {
 			});
 			buttons.add(button);
 			buttons.row();
-			j++;
 		}
 		buttons.pad(20);
 	}

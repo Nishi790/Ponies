@@ -88,6 +88,10 @@ public class MainChar {
 	public void setStats(double[] stats) {
 		this.stats = stats;
 	}
+	
+	public void setStats(int stat, double value){
+		stats[stat]=value;
+	}
 
 	public double[] getPoints() {
 		return points;
