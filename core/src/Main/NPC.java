@@ -43,22 +43,29 @@ public class NPC {
 		yPos=Integer.parseInt(input[2].trim());
 		Texture sprite=new Texture(Gdx.files.internal("data/Sprites/"+input[3].trim()));
 		avatar=new Sprite(sprite);
+		avatar.setSize(2,2);
 		avatar.setCenter(xPos, yPos);
-		avatar.scale(-23/24f);
 		setCurrentFriendship(Integer.parseInt(input[4].trim()));
 		
 	}
+	
+	
+	//returns list of dialog file names
 	public String[] readTasks(){
 		String encounters=tasks.readString();
 		String[] list=encounters.split(";");	
 		return list;
 	}
+	
+	
+	//Creates current dialog file based on file names and current dialog index
 	public dialogEngine.Dialog getCurrentDialog(){
 		String task=taskList[currentTask];
 		dialogEngine.Dialog talk=new dialogEngine.Dialog(Gdx.files.internal("data/Dialog/"+task), main, this,screen);
 		return talk;
 	}
 
+	
 	public String getName() {
 		return name;
 	}

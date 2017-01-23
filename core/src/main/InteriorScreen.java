@@ -60,7 +60,7 @@ public class InteriorScreen implements Screen, InputProcessor {
 		this.main=main;
 		origX=main.avatar.getX();
 		origY=main.avatar.getY();
-		main.avatar.setPosition(-camera.viewportWidth/2f+7.5f, -camera.viewportHeight/2f-3f);
+		main.avatar.setPosition(5, 2);
 		npcs=new ArrayList<NPC>();
 		
 		//npcData=new com.badlogic.gdx.files.FileHandle[]{Gdx.files.internal("data/NPCs/Pinkie.txt"), 
@@ -83,33 +83,46 @@ public class InteriorScreen implements Screen, InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		switch(keycode){
+		
+		//set direction of movement
+		
 		case Input.Keys.UP: 
 			getMain().setMoveUp(true);
 			getMain().setMoveDown(false);
 			break;
+			
 		case Input.Keys.DOWN:
 			getMain().setMoveDown(true);
 			getMain().setMoveUp(false);
 			break;
+			
 		case Input.Keys.LEFT: 
 			getMain().setMoveLeft(true);
 			getMain().setMoveRight(false);
 			break;
+			
 		case Input.Keys.RIGHT: 
 			getMain().setMoveRight(true);
 			getMain().setMoveLeft(false);
 			break;
+		
+		//exit game
 		case Input.Keys.ESCAPE:
 			dispose();
 			game.dispose();
 			break;
+			
+		//display inventory by pressing i
 		case Input.Keys.I:
 			invi=new Inventory(getMain(), game);
 			invi.getDisplay().show(invi.getStage());
+			
+		//Exit building by pressing e
 		case Input.Keys.E:
 			getMain().avatar.setPosition(origX, origY);
 			game.setScreen(game.main);
 			break;
+			
 		}
 		return false;
 	}
@@ -117,16 +130,22 @@ public class InteriorScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
+		//stop movement if key lifted
 		switch(keycode){
+		
 		case Input.Keys.UP:
 			getMain().setMoveUp(false);
+		
 		case Input.Keys.DOWN:
 			getMain().setMoveDown(false);
+		
 		case Input.Keys.LEFT:
 			getMain().setMoveLeft(false);
+		
 		case Input.Keys.RIGHT:
 			getMain().setMoveRight(false);
 		}
+		
 		return false;
 	}
 
@@ -202,21 +221,28 @@ public class InteriorScreen implements Screen, InputProcessor {
 		//actual drawing
 		game.batch.begin();
 		getMain().draw(game.batch);
+		
+		//draw NPCs
 		if (!npcs.isEmpty()){
 			for(NPC n: npcs){
 				n.avatar.draw(game.batch);
 			}
 		}
+		
+		//draw Furnishings
 		if (!furnishing.isEmpty()){
 			for(Furniture f: furnishing){
 				f.getImage().draw(game.batch);
 			}
 		}
 		game.batch.end();
+		
+		//draw dialog
 		if(inDialog){
 			display.getChat().show(display.getStage());
 			if(display.getPrompt()=="close"){
 				int j=getMain().getActiveQuests().size();
+				//check for any completed quests
 				for(int i=0;i<j;i++){
 					if(!getMain().getActiveQuests().get(i).isComplete()){
 						getMain().getActiveQuests().get(i).checkComplete();
@@ -230,11 +256,17 @@ public class InteriorScreen implements Screen, InputProcessor {
 				display.getStage().draw();
 			}
 		}
+		
+		//draw interaction message if interacting with an object
 		if(isAlert()){
 			getInteractee().getStage().draw();
 		}
+		
+		//draw HUD
 		getHud().act();
 		getHud().draw();
+		
+		//draw Inventory
 		if(invi!=null){
 			invi.getStage().draw();
 		}
@@ -264,34 +296,38 @@ public class InteriorScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
-		getHud().dispose();
-		tiledMapRenderer.dispose();
-		current.dispose();
+
 		
 	}
 
 
 	@Override
 	public void dispose() {
-		
+		getHud().dispose();
+		tiledMapRenderer.dispose();
+		current.dispose();
+		display.dispose();
+		invi.dispose();
 		
 	}
 	
+	//Keep avatar on screen;
 	public void clamp(){
-		if(getMain().avatar.getX()>2*base.getWidth()-camera.viewportWidth/2){
-			getMain().avatar.setX(2f*base.getWidth()-camera.viewportWidth/2);
+		if(getMain().avatar.getX()>18){
+			getMain().avatar.setX(18);
 		}
-		if(getMain().avatar.getX()<-(camera.viewportWidth/2)){
-			getMain().avatar.setX(-(camera.viewportWidth/2));
+		if(getMain().avatar.getX()<0){
+			getMain().avatar.setX(0);
 		}
-		if(getMain().avatar.getY()<-camera.viewportHeight/2f-4f){
-			getMain().avatar.setY(-camera.viewportHeight/2f-4f);
+		if(getMain().avatar.getY()<0){
+			getMain().avatar.setY(0);
 		}
-		if(getMain().avatar.getY()>2*base.getHeight()-getMain().avatar.getHeight()/2){
-			getMain().avatar.setY(2*base.getHeight()-getMain().avatar.getHeight()/2);
+		if(getMain().avatar.getY()>18){
+			getMain().avatar.setY(18);
 		}
 	}
 	
+	//keep from walking through furniture, displays interaction message
 	public void block(){
 		for(Furniture n: furnishing){
 			if(n.getImage().getBoundingRectangle().overlaps(main.avatar.getBoundingRectangle())){

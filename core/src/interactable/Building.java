@@ -20,18 +20,23 @@ public class Building {
 	
 	public Building(FileHandle info){
 		file=info;
+		
+		//parse file
 		String inf=file.readString();
 		String[] temp=inf.split(";");
-		sprite=new Sprite(new Texture(Gdx.files.internal("data/Buildings/"+temp[0])));
+		sprite=new Sprite(new Texture(Gdx.files.internal("data/Buildings/"+temp[0])));//image of building
 		getSprite().setPosition(Integer.parseInt(temp[1]), Integer.parseInt(temp[2]));//x,y position
-		getSprite().scale(-15/16f);
+		getSprite().scale(-15/16f);//scale building
 		inside=new TmxMapLoader().load("data/Maps/"+temp[3]);//interior map
+		
+		//generate inside furniture
 		furniture=new ArrayList<String>();
 		for(int i=4; i<temp.length; i++){
 			furniture.add("data/Furniture/"+temp[i]);
 		}
 	}
 	
+	//enter the building
 	public void enter(MainChar main, Sim game){
 		game.setScreen(new InteriorScreen(game, main, inside, furniture));
 	}

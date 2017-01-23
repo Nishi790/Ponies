@@ -36,18 +36,27 @@ public class MainMenuScreen implements Screen {
 		stage.getViewport().getCamera().position.y=0;
 		skin=new Skin(Gdx.files.internal("data/skin/terra-mother-ui.json"),
 				new TextureAtlas(Gdx.files.internal("data/skin/terra-mother-ui.atlas")));
+		
 		skin.add("unicorn", 
 				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/VinylScratch.png"))));
+		
 		skin.add("pegasus", 
 				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/Derpy.png"))));
+		
 		skin.add("pegasusWalk", 
 				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/Drizzle.png"))));
+		
 		skin.add("pony", 
 				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/EarthPony.png"))));
 
+		
 		welcome=new Label("Welcome to PonyLife!", skin);
+		
 		instructions=new Label("Select a pony to begin", skin);
+		
 		ponySelection=new ImageButton[4];
+		
+		//create image buttons for each possible character
 		ponySelection[0]=new ImageButton(new TextureRegionDrawable(skin.getRegion("unicorn")));
 		ponySelection[0].addListener(new ChangeListener(){
 
@@ -88,14 +97,25 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 		ponySelection[3].pad(10);
+		
+		//create table to organize image buttons
 		buttons=new Table(skin);
+		
+		//create table to hold labels and button table
 		layout=new Table(skin);
+		
+		//organize table
 		createTable();
+		
+		//set input processor to accept input
 		Gdx.input.setInputProcessor(stage);
+		
+		//add table to the stage to make interactable and drawable
 		stage.addActor(layout);
 		
 	}
 	
+	//fill table with appropriate layout
 	private void createTable(){
 		layout.add(welcome);
 		Cell<Label> a=layout.getCell(welcome);
@@ -116,10 +136,14 @@ public class MainMenuScreen implements Screen {
 	
 	@Override
 	public void render(float delta){
+		//clear screen
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		//layout table
 		layout.layout();
 
+		//draw everything
 		stage.draw();
 
 	}

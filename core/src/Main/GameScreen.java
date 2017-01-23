@@ -14,6 +14,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+
+import battleEngine.BattleScreen;
 import dialogEngine.DialogBox;
 import interactable.Building;
 import inventory.Inventory;
@@ -109,11 +111,15 @@ public class GameScreen implements Screen, InputProcessor {
 		//actual drawing
 		game.batch.begin();
 		main.draw(game.batch);
+		
+		//draw NPCs
 		if (!npcs.isEmpty()){
 			for(NPC n: npcs){
 				n.avatar.draw(game.batch);
 			}
 		}
+		
+		//draw Buildings
 		if(!buildings.isEmpty()){
 			for(Building b: buildings){
 				b.getSprite().draw(game.batch);
@@ -121,6 +127,8 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		
 		game.batch.end();
+		
+		//draw chat if inDialog
 		if(inDialog){
 			display.getChat().show(display.getStage());
 			if(display.getPrompt()=="close"){
@@ -130,7 +138,6 @@ public class GameScreen implements Screen, InputProcessor {
 						main.getActiveQuests().get(i).checkComplete();
 					}
 				}
-				System.out.println("Dispose of Stage");
 				display.dispose();
 				display=null;
 				inDialog=false;
@@ -139,8 +146,12 @@ public class GameScreen implements Screen, InputProcessor {
 				display.getStage().draw();
 			}
 		}
+		
+		//draw HUD
 		hud.act();
 		hud.draw();
+		
+		//Draw inventory
 		if(invi!=null){
 			invi.getStage().draw();
 		}
@@ -176,30 +187,46 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		
 		switch(keycode){
+		
+		//Set movement direction
 		case Input.Keys.UP: 
 			main.setMoveUp(true);
 			main.setMoveDown(false);
 			break;
+			
 		case Input.Keys.DOWN:
 			main.setMoveDown(true);
 			main.setMoveUp(false);
 			break;
+			
 		case Input.Keys.LEFT: 
 			main.setMoveLeft(true);
 			main.setMoveRight(false);
 			break;
+			
 		case Input.Keys.RIGHT: 
 			main.setMoveRight(true);
 			main.setMoveLeft(false);
 			break;
+			
+		//exit game
 		case Input.Keys.ESCAPE:
 			dispose();
 			game.dispose();
 			break;
+		
+		// display inventory	
 		case Input.Keys.I:
 			invi=new Inventory(main, game);
 			invi.getDisplay().show(invi.getStage());
+			break;
+		
+		//temporary, to allow easy testing of battle screen
+		case Input.Keys.B:
+			game.setScreen(new BattleScreen(game, main));
+			break;
 		}
 
 		return false;
@@ -208,13 +235,18 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
+		//stop movement if key is released
 		switch(keycode){
+		
 		case Input.Keys.UP:
 			main.setMoveUp(false);
+		
 		case Input.Keys.DOWN:
 			main.setMoveDown(false);
+		
 		case Input.Keys.LEFT:
 			main.setMoveLeft(false);
+		
 		case Input.Keys.RIGHT:
 			main.setMoveRight(false);
 		}
@@ -263,7 +295,11 @@ public class GameScreen implements Screen, InputProcessor {
 		return false;
 	}
 	
+	
+	//check collisions with NPCs, stop from walking through them; if colliding with NPC, enter dialog with them
+	//Check collisions with buildings; if colliding from the bottom, enter building
 	public void block(){
+
 		for(NPC n: npcs){
 			if(main.avatar.getBoundingRectangle().overlaps(n.avatar.getBoundingRectangle())){
 				if(main.moveDown){
@@ -296,18 +332,20 @@ public class GameScreen implements Screen, InputProcessor {
 					if(main.moveDown){
 						main.setMoveDown(false);
 						main.avatar.setY(main.avatar.getY()+10*Gdx.graphics.getDeltaTime());
-					
 					}
+					
+					//if colliding from the bottom, enter building
 					if(main.moveUp){
 						main.setMoveUp(false);
 						main.avatar.setY(main.avatar.getY()-10*Gdx.graphics.getDeltaTime());
 						b.enter(main, game);
-					
 					}
+					
 					if(main.moveLeft){
 						main.setMoveLeft(false);
 						main.avatar.setX(main.avatar.getX()+10*Gdx.graphics.getDeltaTime());
 					}
+					
 					if(main.moveRight){
 						main.setMoveRight(false);
 						main.avatar.setX(main.avatar.getX()-10*Gdx.graphics.getDeltaTime());
@@ -317,7 +355,8 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 	}
 
-
+//Getters and Setters
+	
 	public dialogEngine.Dialog getCurrentDialog() {
 		return currentDialog;
 	}

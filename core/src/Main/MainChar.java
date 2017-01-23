@@ -15,7 +15,6 @@ public class MainChar {
 	private double[] stats=new double[]{10,10,10,10};//sleep, hunger, fun, hygiene
 	private double[] points=new double[]{100,100,100}; //special ability (fly/spells/earth pony???);HP;MP
 	private int gold=100;
-	ArrayList<NPC> npcsEncountered;
 	OrthoCamera camera;
 	ArrayList<Quest> activeQuests;
 	private ArrayList<Item> inventory;
@@ -26,37 +25,46 @@ public class MainChar {
 		moveRight=false;
 		moveUp=false;
 		moveDown=false;
-		npcsEncountered=new ArrayList<NPC>();
 		this.camera=camera;
+		avatar.setSize(2, 2);
 		avatar.setCenter(camera.viewportWidth/2, camera.viewportHeight/2);
-		avatar.scale(-23/24f);
 		activeQuests=new ArrayList<Quest>();
-		setInventory(new ArrayList<Item>());
+		inventory=(new ArrayList<Item>());
 	}
 	
-	public ArrayList<Quest> getActiveQuests(){
-		return activeQuests;
-	}
+	//wrapper for draw function
+	public void draw(Batch b){avatar.draw(b);}
+		
+	//Getters and Setters as needed
 	
-	public void draw(Batch b){
-		avatar.draw(b);
-	}
-	
-	public void addGold(int a){setGold(getGold()+a);}
+	public ArrayList<Quest> getActiveQuests(){return activeQuests;}
 
-	public void setMoveUp(boolean b) {
-		moveUp=b;		
-	}
-	public void setMoveDown(boolean b){
-		moveDown=b;
-	}
-	public void setMoveLeft(boolean b){
-		moveLeft=b;
-	}
-	public void setMoveRight(boolean b){
-		moveRight=b;
-	}
+	public ArrayList<Item> getInventory() {return inventory;}
+
+	public double[] getStats() {return stats;}
 	
+	public void setStats(int stat, double value){stats[stat]=value;}
+
+	public double[] getPoints() {return points;}
+
+	public void setPoints(int stat, double value) {points[stat]=value;}
+
+	public int getGold() {return gold;}
+
+	//add gold to current total, use negative int to subtract gold
+	public void addGold(int a){gold=(getGold()+a);}
+
+	public Sprite getAvatar() {return avatar;}
+	
+	public void setMoveUp(boolean b) {moveUp=b;}
+
+	public void setMoveDown(boolean b){moveDown=b;}
+
+	public void setMoveLeft(boolean b){moveLeft=b;}
+	
+	public void setMoveRight(boolean b){moveRight=b;}
+	
+	//move player based on current direction of movement and time since last frame
 	public void updatePos(){
 		if(moveUp) {
 			avatar.setY(avatar.getY()+10*Gdx.graphics.getDeltaTime());
@@ -73,39 +81,4 @@ public class MainChar {
 	}
 	
 
-	public ArrayList<Item> getInventory() {
-		return inventory;
-	}
-
-	public void setInventory(ArrayList<Item> inventory) {
-		this.inventory = inventory;
-	}
-
-	public double[] getStats() {
-		return stats;
-	}
-
-	public void setStats(double[] stats) {
-		this.stats = stats;
-	}
-	
-	public void setStats(int stat, double value){
-		stats[stat]=value;
-	}
-
-	public double[] getPoints() {
-		return points;
-	}
-
-	public void setPoints(double[] points) {
-		this.points = points;
-	}
-
-	public int getGold() {
-		return gold;
-	}
-
-	public void setGold(int gold) {
-		this.gold = gold;
-	}
 }
