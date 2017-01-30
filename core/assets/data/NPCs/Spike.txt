@@ -1,5 +1,5 @@
 spikeTasks.txt;
-10;
-10;
+20;
+20;
 spike.png;
 25

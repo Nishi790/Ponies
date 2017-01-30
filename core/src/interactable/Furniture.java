@@ -23,7 +23,7 @@ public class Furniture {
 	int cost;
 	private Stage stage;
 	
-	public Furniture(InteriorScreen loc, FileHandle f){
+	public Furniture(InteriorScreen loc, FileHandle f, String x, String y){
 		setStage(new Stage());
 		location=loc;
 		String[] info=f.readString().split(":");
@@ -33,8 +33,8 @@ public class Furniture {
 		setImage(new Sprite(new Texture(Gdx.files.internal("data/Furniture/"+info[3]))));
 		message=info[4];
 		cost=Integer.parseInt(info[5]);
-		image.setPosition(Float.parseFloat(info[6]),Float.parseFloat(info[7]));
-		image.setSize(image.getWidth()/32,image.getHeight()/32);
+		image.setPosition(Float.parseFloat(x),Float.parseFloat(y));
+		image.setSize(image.getWidth()/16,image.getHeight()/32);
 	}
 	
 	public void interactWith(){
@@ -47,8 +47,8 @@ public class Furniture {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				double relevant=location.getMain().getStats()[stat];
-				if(relevant+improvement>10){
-					relevant=10;
+				if(relevant+improvement>50){
+					relevant=50;
 				}
 				else {
 					relevant=relevant+improvement;

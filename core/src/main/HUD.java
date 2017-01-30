@@ -92,7 +92,7 @@ public class HUD {
 		float delayTime=5f;
 		current[0]=new Table(this.game.skin);
 		current[0].add("Sleep ");
-		Label temp=new Label(main.getStats()[0]+"/10", this.game.skin);
+		Label temp=new Label(main.getStats()[0]+"/50", this.game.skin);
 		Action t=Actions.sequence((
 				new StatTracker(temp, 0, this.game, this.main)), 
 				Actions.delay(delayTime));
@@ -101,7 +101,7 @@ public class HUD {
 		
 		current[1]=new Table(this.game.skin);
 		current[1].add("Hunger ");
-		temp=new Label(main.getStats()[1]+"/10", this.game.skin);
+		temp=new Label(main.getStats()[1]+"/50", this.game.skin);
 		t=Actions.sequence((
 				new StatTracker(temp, 1, this.game, this.main)), 
 				Actions.delay(delayTime));
@@ -110,7 +110,7 @@ public class HUD {
 		
 		current[2]=new Table(this.game.skin);
 		current[2].add("Fun ");
-		temp=new Label(main.getStats()[2]+"/10", this.game.skin);
+		temp=new Label(main.getStats()[2]+"/50", this.game.skin);
 		t=Actions.sequence((
 				new StatTracker(temp, 2, this.game, this.main)), 
 				Actions.delay(delayTime));
@@ -119,7 +119,7 @@ public class HUD {
 		
 		current[3]=new Table(this.game.skin);
 		current[3].add("Hygiene ");
-		temp=new Label(main.getStats()[3]+"/10", this.game.skin);
+		temp=new Label(main.getStats()[3]+"/50", this.game.skin);
 		t=Actions.sequence((
 				new StatTracker(temp, 3, this.game, this.main)), 
 				Actions.delay(delayTime));

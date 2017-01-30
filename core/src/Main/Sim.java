@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Sim extends Game {
 	public SpriteBatch batch;
-	BitmapFont font;
+	public BitmapFont font;
 	AssetManager manager;
 	public Skin skin;
 	GameScreen main;

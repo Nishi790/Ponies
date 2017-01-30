@@ -1,11 +1,847 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="1">
- <tileset firstgid="1" name="grass" tilewidth="32" tileheight="32" tilecount="16" columns="4">
-  <image source="Dirt and Grass.png" width="128" height="128"/>
+ <tileset firstgid="1" name="stone and grass" tilewidth="32" tileheight="32" tilecount="90" columns="10">
+  <image source="tilesGrassStone.png" width="320" height="288"/>
  </tileset>
- <layer name="Tile Layer 1" width="100" height="100">
+ <tileset firstgid="91" name="building" tilewidth="32" tileheight="32" tilecount="104" columns="8">
+  <image source="../Buildings/TownHall.png" width="256" height="420"/>
+  <tile id="3">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="35">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="39">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="41">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="42">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="43">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="44">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="45">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="46">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="47">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="48">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="49">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="50">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="51">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="52">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="53">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="54">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="55">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="56">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="57">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="58">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="59">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="60">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="61">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="62">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="63">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="64">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="65">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="66">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="67">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="68">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="69">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="70">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="71">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="72">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="73">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="74">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="75">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="76">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="77">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="78">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="79">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="80">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="81">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="82">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="83">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="84">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="85">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="86">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="87">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="88">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="89">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="90">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="91">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="92">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="93">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="94">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="95">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="96">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="97">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="98">
+   <properties>
+    <property name="Entrance" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="99">
+   <properties>
+    <property name="Entrance" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="100">
+   <properties>
+    <property name="Entrance" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="101">
+   <properties>
+    <property name="Entrance" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="102">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="103">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="195" name="sugar" tilewidth="32" tileheight="32" tilecount="48" columns="6">
+  <image source="../Buildings/SugarCube Corner.png" width="192" height="256"/>
+  <tile id="8">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="30">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="31">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="35">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="39">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="41">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="43">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="44">
+   <properties>
+    <property name="Entrance" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="45">
+   <properties>
+    <property name="Entrance" type="bool" value="true"/>
+    <property name="building" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="46">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="243" name="library" tilewidth="32" tileheight="32" tilecount="48" columns="8">
+  <image source="../Buildings/Twilight's_library.png" width="256" height="212"/>
+  <tile id="0">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="30">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="31">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="35">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="39">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="42">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="43">
+   <properties>
+    <property name="Entrance" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="44">
+   <properties>
+    <property name="Entrance" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="45">
+   <properties>
+    <property name="Entrance" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="46">
+   <properties>
+    <property name="building" type="bool" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="291" name="block" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+  <image source="Dirt and Grass.png" width="128" height="128"/>
+  <tile id="14">
+   <properties>
+    <property name="blocked" type="bool" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="blocked" width="100" height="100" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2ZsXKDMBAFPUnt8f//bVKkyBATDD7praQttkqGk3cFNnC/3W73N/n45vHD3v/897dqes6i8buFPbJ8blqkemzn2yPX49n8o7XMSrrHdvara5mVVI+jDqs2SfQ402K1Pr16nPG8cpPWPa7s+ZXPleoeldee7W+to+PM0KeiR6vvgqvnTdppskfL7+Tq/mnXV3v8d12/6uTK2o72RjUVPs8e5521Pi4eo+Vna9GluittPb32Gs1DmqoOVT1WbdXSmT3W6LHXpse80fz0nmkP1kx7sGbagz1zFOzx+pqFQ0VL6j4d8fyY2Ys9WF7swfJiD5YXe7C82IPlxR4sL/bY95K6P7fJvptR5iYbpp8PSN3zkhH2nNcrlhd7sLzYg+XFHiwv9mB5sQfLiz1YXuzB8pLucfZ+L30/Kvu9Wu6lVc8PKvZgYQ8W9mDRy0vP78SR8fxgYQ8WSS82YTmxB8uJPVhORuqRfl4j+8+vZt2jz+5JEg4opD9zej6NtI/0fBppH+n5NNLXaXuwnNiD5cQeLCf2YDmxB8vJCj3O/mayxzmvwqDX+eL5wcIeLOzBwh4s7MEi5cQWLC/2YHmxB8uLPVhe7MHyYg+WF3uwvNiD5cUeLC/2YHmxB8uLPf76qH73RexR9d6v1zvI9HvQBFccz7ZPj/ZbYg1EZr9ejYY9WNiDhT1Y2IOFPVjYg4U9WNiDhT1Y2OM1vgDlI0zLQJwAAA==
+   H4sIAAAAAAAAC+3VUQqDMBBF0XZJ3f/mSj+EtrSaaMYZ4jngZyC8i3q7AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZHvfsG7B4tdCjhqWFHvneW+iR67uFHrn0qONXCz1y/GuhRw496lhroce5tlrocZ6WFnqcR486WlvoEa+nhR6xelvoEUuPGvZ00COGFnVoke9IAz3GGdVBi2NGdtBiv9EdtOgX0WCrg1afohq07uw9im/Qs+lM37ozdo3+T1Tokb1XhQ49W0TI3qpah9Zdes9etcMoo3usncnerHKH1o1Gnc3ereL2vZvuPTfDk+3KLapquWP2drNuv0f2lrPuCgDM5Qk7BOkEQJwAAA==
+  </data>
+ </layer>
+ <layer name="base" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3ZvQ2CUACF0TeAC9jY6gxMoLX77yIFNCYqP8K74Z3iRI1izP0CFpxKKc/eY3g8Dd5fj58Zn4/vXXq33pm/uK9w1QIAAAAAAAAAAAAAAAAAAGhcN6j9OwAAAAAAAACmco8zh3vOObqiR4qu6JHivYUeevC5hR5ZLfTQo3XfWuiR1UKPrBZ66NGiqS30yGqhR1YLPfRowZIOemhxdFrUt6aBHnkdtMjpoEVOBy0yGvzqoNU+Dabu7DzavsGcTY90rdtj163/J5Z+59petTdK6zBnlznH6bDtOb7kuBZb7HXN/dd5VXuv9A5retTe4Cjbu+5kbT+nS0stam//a+sjd6i98RbnToLamwAAfPICoOzu7ECcAAA=
+  </data>
+ </layer>
+ <layer name="overland" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2dy24UMRBFnbAEFkQChCA/A6uAYBMJ5f+/hBkplnpMP+pd126XdDeRZlx1j8v2uCdJKTbxbspEFpFdQ296Bshhqg9Zz5U59/z01Nn79pJnL/XPWqempjia+/Gt5vqHLwRGH4B0lCulxyPWAasxsv22YILi5cgMsthMz8fnMlKtveRpxSA7b6vasnPUcMjO2bPe6HzqeXh03zVcLPy1mh9nYOHNxJJHtkdIbEaeD9mfmaQeedU9+yGPCYWDdJxe5jkik9kTt9KefaxZaOs5S29Y8zhTT3g/X9D6iMYC4XlMFg/E/eITQdmeezBBZPG50OJj8zrEfYrjKwqL5dpEZVHjyiSyV7jMtTwy5xKXxTLaXkEROo+tfVrDogYiE6q/KGvVVe+5xu/EW8H4nvuOhgc1Z+v8LXqjBlqPePHwkmVv1JD0iJf/FI9HXatqePE48nrNTymPCO/X1jkPHlzfrLXnNRKPqP6I8lrSU8gsInlk1IbQG5SzVzu+dWTu5xk8qHevnHXgKL686ijuFP71ykPrf/u67M+DWTys9iiO/9T3esM1fiW2eiP63veZ6IPGL6/zx1L3Rcbl7vW12f1A7QspDw//KXsPh4vVfmH5PNKSh9fcl+i+Uc1j+bPonLx5eK9BHnVm5+HJY+/nSMrOjXMm8No/kLTMGfE5OZeFJY+M7+L0Mn8yeGTWmZ3H5PE/D9T1iuttrzwi89WwPvK2fe9sHtJ9p4e5I/E1m4e21uw8zs6j/Z3e7HzOyGNt/UbNVcOiFx57eWfnYc2jVybIeXK9LJMHWZLzH8fLGh48Ij+TWfDwyFfCwotHNAu0PKUsJo9cHmtxxAOt1rV8s/OQsJg8sHhsxeRxK83zGy2LlsceFy9PtfeIKPNFu05586CeIXu/1+V6dRSacTKf/ezVHvXMWPL5m8pj764uey5y7xEjeHiwKMZjRiorJ6kn1OCMjcQkIx9vFsUxhyhfRmJRBHkgMInMQ1O7JCYPew5WPLbOJWhMPHOwuKPQhDTHnnlseb4nFBaITDjjS7xH7QtkJh7eR/fDMlDqRlM0h8IYc1QWmvqtgzs+5Xu+yLJaCz3Cen3+qhCy954MCnFMLotvF70I9YswXpa8QzL+EYuHi35e9Pei30K9EHIbhUEJykXKYsnEsldQI6qGPws9MlVf90OZA3Ls+V7PSe0dlVV8LzQuozO4BlKPX7lssRiZA8VrynNkj1jrlVFZ9HS2qFxGYTHKWa/H0Hhq8f2WM0fEvJ9M1sPSL4vvAx710tq90Ejh6a31e3Lv6XqJ7HUnggVFGeHpUdT3lS1YoP5dnd7y5bDYunOhqvf/G5jFIzunM7P8B54xCPlAnAAA
+  </data>
+ </layer>
+ <layer name="buildings" width="100" height="100">
+  <properties>
+   <property name="building" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3RyVPPcRzH8ZLIGmXJGv4wR904FTP2fSfZSaiUtZC9SF3rgBm7LNlpxJCI0pODGSenz/fbd37Px/yel9/l9Z7vJy1NkiRJkiRJkiRJkiRJkiQNBLPjPkD/mEMFcR+hv+bSvLiP0B+FVETzaUGEuy3UGuHeQLeQFtFiWkJLaRktpxWBt2/QTboVeCdJVtIqWk1raC2to/W0IeDubbpDd+ke3acHAfeSYiNtos20hbZSMW2jkoC7D+kRtdFjekJPA+4lxXbaQTtpF+2mPbSX9gXcfUbt9Jxe0Et6FXAvKfZTKR2gMjpIh+gwlQfcfU1v6C29o/fUEXAvKSqoko5QFVXTUTpGxwNvf6BO+kifAm8lxQk6SaeohmrpNJ2hszHelarq6Bydpwt0kS7RZboS412pqp4a6Cpdo0a6Tk3UHN9ZkiRJkiRJkiRJkiRJkiRJkiRJUiQ+0xfqoq/UTd/oO/XEeFeq+kE/qZf66NfvP9P50aD0OC9LTRl888GUSUNoKGXRMBrue0RuBN98JI2i0ZRNY2gs5fgekcvlm4+j8TSBJlIeTaLJvkfkpvDNp9I0mk75NINm0izfQ5IkSZIkSZIkSZIkSZL0H/0EJ/eEQJwAAA==
+  </data>
+ </layer>
+ <layer name="details" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2dTW/UMBCGQ5EAqUUCJCgCJOAIHDgtHDecOPH//07XghGuO+P4YxyPnfeRrO0m2910np0ZJ5tsl6WOj5fxqfI5ZiUWmx+X8dO7LeHkDeLLZXwtfL6ZODHLKDYUbz/262X88m5LvJy9UeN1JsjD+d9tmBPr8jfe/s9c7PzHxfgsLE/9/dk5B/elesHlRricg4t/So+QvB0ZyYG/jpbn1Bv0iDLWhXfArQvvg/asy3bMf2OYGqAP64L61Atu32R03hgaufhzYs6N9WMc4d9/23dzHvC64nfD/RWHxfmr1dhLOCel+WIFKf9HcSBBbkaiNubvK8apcn04JGrq2B6Uvv/Dv/9D4ev7x/qkOc5pYz3Hu8g6i3XsZil3UBp7Duqdp4Xvo/SY2HoJ58R6zqTkA5f/5OBbo+3ainWuixByI7G3k9R8COPubr832aI+xGreHk4ollsutOuQVaj2STVsDydbtekIHoiwD3F1rKUTyUWJBzpmYP3YQQx//uATzse0ncTmc6X5QMcMLB47yIWbH7RyopkTR+NFcP+68vk4F5KHmeZNWmjmCOdiKx9G7gUtcH0lNUdiseNcvIq8Lj3XDL1AE9dXUnNEip3UL2K5AQ88dG5nad0qcQFk6NxOR25vfy4shwsdNHzEegbII9dHbg8HeeT4QK1qT60P5IYuOT5Qq9qT6gO1qj05++moVW2hz0hSfZQcpwLp5OwPIjf24Ulw/5HwOPjYB/QOW9T0DvjQp7R3ONDLdUHvsEOqCwd8tAfHrGzB+ZDOMYWP9nA+pGsd4KM9Un5w58/BR1ukXi5d6zCKj1HP6Zr18/JRzyWy5EPjPT1qXjhy9juIlj403tMj5UU4Xyo5j3qUejUC/hy2JDcc8KFL6XmIxOw+evUf+LhPz3PtS2uVI9XHaPOcnvOA2uuhHjPLngX3R5rn9KQmN4hZa1YPNK4VhA8dNHLDAR/1aLlwwEc9mtc0S+c0hD0d8GjmhkPykZoj4f+iOBra1/u7703i5rypPvzrFY+Gdm74pOyHcBwxN5yHp8EyTRcOrm69XLadHC03uJy4Un4Nek7MteK0rE8SYd2Cj4f1qUVOSIQ5klKzZqZHTvigZv2ntwvHUXzE5oU961OI81E69x0F6fupuXmsBWbPkXNwK3mwdB3MbDlCMecGR49eEWPkHOFin4NzcaO9UQqMkCO1sffp2bdTuVrub6PzIeV9j6HBCB5C3vbegEoo5twYDYu1NAYX+5mw/L+eZo99iPT91Fv/I4YjVjNKx5GwnBdHQ/pcHfTjDzNAP+DDDpwL+OgDXNgCPmwBH3aACzvAhR3gwga3C46LWIJzYe2z46MAF3aACzvAhW3goi93sj8dAECcAAA=
+  </data>
+ </layer>
+ <layer name="detail2" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3YQU7CQBQG4DmAd9CtrkXdKDXq2ht4OK+iLnTjlZwGMTKUiBX6pvb7kpdCKelPZ+bRNCWGcJjrKDoEX45znRT7znKdB2SZou/Xuuu6L/ddb/ic3WrS4lqXr7f9nP1Yzv1yS4wmLeZ+uV0yPnVpkl61C9vcv5bHWAv703X/+tMxTVpfC8aoLk3SrwAAAAAAgHUP0QEAACbgNOCcT7mec70EnJt1r7neokMMaNs5/9jjO7vwPuC5gLr16T0R/+sArd/0H70qxmWuq+gQbJz/1kUdjAMAAABAnWbRAVgxjw4AAAAAEzGWZyJjydnX7LPG8kxkLDn7mqf//xsBAACgdBAdAAAAYOJuowOw4qZ4fxGSglY5Fq37wVPQ6upT1kacrvGwNuLoVfXoGgu9KoaxqEfXve1dRBAAAPijD0zQ+i9AnAAA
   </data>
  </layer>
 </map>

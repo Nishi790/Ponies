@@ -34,7 +34,7 @@ public class StatTracker extends Action {
 		if(index<=3){
 			statValue=main.getStats()[index]-0.001;
 			main.getStats()[index]=statValue;
-			label.setText(java.lang.Math.round(statValue) +"/10");
+			label.setText(java.lang.Math.round(statValue) +"/50");
 		}
 		if(index>3&&index<7){
 			statValue=main.getPoints()[index-4];
@@ -43,7 +43,7 @@ public class StatTracker extends Action {
 		
 		if(index==7){
 			statValue=main.getGold();
-			label.setText("Gold: "+java.lang.Math.round(statValue));
+			label.setText("Bits: "+java.lang.Math.round(statValue));
 		}
 		
 		return false;

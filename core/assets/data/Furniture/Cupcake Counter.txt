@@ -1,1 +1,1 @@
-Cupcake Counter:1:4:Cupcake Counter.png:Would you like to buy a cupcake for 3 gold?:3:1:15
+Cupcake Counter:1:4:Cupcake Counter.png:Would you like to buy a cupcake for 3 bits?:3

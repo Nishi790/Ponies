@@ -8,14 +8,23 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 
 import battleEngine.BattleScreen;
+import battleEngine.Monster;
 import dialogEngine.DialogBox;
 import interactable.Building;
 import inventory.Inventory;
@@ -37,9 +46,13 @@ public class GameScreen implements Screen, InputProcessor {
 	BitmapFont font;
 	HUD hud;
 	ArrayList<Building> buildings;
+	ArrayList<Rectangle> collisions;
+	ArrayList<Rectangle> entrances;
+	Animation<TextureRegion> ani;
+	float animationtime=0;
 	
 	
-	public GameScreen(final Sim game, Sprite pony){
+	public GameScreen(final Sim game, Texture pony, String name){
 		this.game=game;
 		screenHeight=Gdx.graphics.getHeight();
 		screenWidth=Gdx.graphics.getWidth();
@@ -48,22 +61,65 @@ public class GameScreen implements Screen, InputProcessor {
 		current=new TmxMapLoader().load("data/Maps/map.tmx");
 		buildings=new ArrayList<Building>();
 		String[] temporary=Gdx.files.internal("data/Maps/mapBuildings.txt").readString().split(":");
-		for(String s:temporary){
-			Building b=new Building(Gdx.files.internal("data/Buildings/"+s));
-			buildings.add(b);
-		}
-		float scale=1/16f;
+		//for(String s:temporary){
+			//Building b=new Building(Gdx.files.internal("data/Buildings/"+s));
+			//buildings.add(b);
+		//}
+		float scale=1/32f;
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(current,scale);
-		base=(TiledMapTileLayer)current.getLayers().get(0);
+		base=(TiledMapTileLayer)current.getLayers().get(1);
 		
+
 		//set up camera
-		camera=new OrthoCamera(base);
+		camera=new OrthoCamera(base, scale);
 		camera.setToOrtho(false,screenWidth/32,screenHeight/32);
 		camera.position.set(camera.viewportWidth/2f, camera.viewportHeight/2f, 0);
 		camera.update();
 		
+		collisions=new ArrayList<Rectangle>();
+		entrances=new ArrayList<Rectangle>();
+		TiledMapTileLayer build=(TiledMapTileLayer)current.getLayers().get(3);
+		TiledMapTileLayer coll=(TiledMapTileLayer)current.getLayers().get(0);
+		for(int i=0; i<build.getWidth();i++){
+			for(int j=0;j<build.getHeight();j++){
+				Cell cur=build.getCell(i, j);
+				if (cur!=null){
+					TiledMapTile a=cur.getTile();
+					if(a!=null){
+						Object buil=a.getProperties().get("building");
+						if(buil!=null){
+							Rectangle temp=new Rectangle(i,j+1,build.getTileWidth()*scale,build.getTileHeight()*scale);
+							collisions.add(temp);
+						}
+						Object enter=a.getProperties().get("Entrance");
+						if(enter!=null){
+							Rectangle temp=new Rectangle(i,j+1,build.getTileWidth()*scale,build.getTileHeight()*scale);
+							entrances.add(temp);
+						}
+					}
+				}
+			}
+		}
+		for(int i=0; i<coll.getWidth();i++){
+			for(int j=0;j<coll.getHeight();j++){
+				Cell cur=coll.getCell(i, j);
+				if (cur!=null){
+					TiledMapTile a=cur.getTile();
+					if(a!=null){
+						Object buil=a.getProperties().get("blocked");
+						if(buil!=null){
+							Rectangle temp=new Rectangle(i,j+1,coll.getTileWidth()*scale,coll.getTileHeight()*scale);
+							collisions.add(temp);
+						}
+					}
+				}
+			}
+		}
+
+
+		
 		//create characters
-		main=new MainChar(pony, camera);
+		main=new MainChar(pony, name);
 		npcs=new ArrayList<NPC>();
 		String[] s=Gdx.files.internal("data/Maps/NPCs.txt").readString().split(";");
 		for(String t:s){
@@ -76,6 +132,12 @@ public class GameScreen implements Screen, InputProcessor {
 			}
 
 		}
+		//Temporary animation test
+		TextureRegion sheet=new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/proing.png")),128,768);
+		TextureRegion[] sprites=new TextureRegion[]{new TextureRegion(sheet,0,0,128,128),new TextureRegion(sheet,0,128,128,128), 
+				new TextureRegion(sheet,0,256,128,128), new TextureRegion(sheet,0,384,128,128), new TextureRegion(sheet,0,512,128,128)};
+		ani=new Animation<TextureRegion>(0.1f,sprites);
+		ani.setPlayMode(PlayMode.LOOP);
 		
 		//create input processor
 		Gdx.input.setInputProcessor(this);
@@ -125,6 +187,9 @@ public class GameScreen implements Screen, InputProcessor {
 				b.getSprite().draw(game.batch);
 			}
 		}
+		animationtime=animationtime+Gdx.graphics.getDeltaTime();
+		TextureRegion animation=ani.getKeyFrame(animationtime);
+		game.batch.draw(animation, 5, 5, 4, 4);
 		
 		game.batch.end();
 		
@@ -160,7 +225,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public void resize(int width, int height) {
-		
+		camera.setToOrtho(false,width/32,height/32);
 	}
 
 	@Override
@@ -191,22 +256,22 @@ public class GameScreen implements Screen, InputProcessor {
 		switch(keycode){
 		
 		//Set movement direction
-		case Input.Keys.UP: 
+		case Input.Keys.W: 
 			main.setMoveUp(true);
 			main.setMoveDown(false);
 			break;
 			
-		case Input.Keys.DOWN:
+		case Input.Keys.S:
 			main.setMoveDown(true);
 			main.setMoveUp(false);
 			break;
 			
-		case Input.Keys.LEFT: 
+		case Input.Keys.A: 
 			main.setMoveLeft(true);
 			main.setMoveRight(false);
 			break;
 			
-		case Input.Keys.RIGHT: 
+		case Input.Keys.D: 
 			main.setMoveRight(true);
 			main.setMoveLeft(false);
 			break;
@@ -225,7 +290,7 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		//temporary, to allow easy testing of battle screen
 		case Input.Keys.B:
-			game.setScreen(new BattleScreen(game, main));
+			game.setScreen(new BattleScreen(game, main, "TempBG", new Monster(Gdx.files.internal("data/Monsters/Slime.txt"))));
 			break;
 		}
 
@@ -238,16 +303,16 @@ public class GameScreen implements Screen, InputProcessor {
 		//stop movement if key is released
 		switch(keycode){
 		
-		case Input.Keys.UP:
+		case Input.Keys.W:
 			main.setMoveUp(false);
 		
-		case Input.Keys.DOWN:
+		case Input.Keys.S:
 			main.setMoveDown(false);
 		
-		case Input.Keys.LEFT:
+		case Input.Keys.A:
 			main.setMoveLeft(false);
 		
-		case Input.Keys.RIGHT:
+		case Input.Keys.D:
 			main.setMoveRight(false);
 		}
 		return false;
@@ -326,30 +391,26 @@ public class GameScreen implements Screen, InputProcessor {
 				display=new DialogBox(currentDialog, currentDialog.getSpeaker(), game);
 			}	
 		}
-		if(!buildings.isEmpty()){
-			for(Building b:buildings){
-				if(main.avatar.getBoundingRectangle().overlaps(b.getSprite().getBoundingRectangle())){
-					if(main.moveDown){
-						main.setMoveDown(false);
-						main.avatar.setY(main.avatar.getY()+10*Gdx.graphics.getDeltaTime());
-					}
+		for(Rectangle b:collisions){
+			if(main.avatar.getBoundingRectangle().overlaps(b)){
+				if(main.moveDown){
+					main.setMoveDown(false);
+					main.avatar.setY(main.avatar.getY()+10*Gdx.graphics.getDeltaTime());
+				}
 					
-					//if colliding from the bottom, enter building
-					if(main.moveUp){
-						main.setMoveUp(false);
-						main.avatar.setY(main.avatar.getY()-10*Gdx.graphics.getDeltaTime());
-						b.enter(main, game);
-					}
+				if(main.moveUp){
+					main.setMoveUp(false);
+					main.avatar.setY(main.avatar.getY()-10*Gdx.graphics.getDeltaTime());
+				}
 					
-					if(main.moveLeft){
-						main.setMoveLeft(false);
-						main.avatar.setX(main.avatar.getX()+10*Gdx.graphics.getDeltaTime());
-					}
+				if(main.moveLeft){
+					main.setMoveLeft(false);
+					main.avatar.setX(main.avatar.getX()+10*Gdx.graphics.getDeltaTime());
+				}
 					
-					if(main.moveRight){
-						main.setMoveRight(false);
-						main.avatar.setX(main.avatar.getX()-10*Gdx.graphics.getDeltaTime());
-					}
+				if(main.moveRight){
+					main.setMoveRight(false);
+					main.avatar.setX(main.avatar.getX()-10*Gdx.graphics.getDeltaTime());
 				}
 			}
 		}

@@ -35,13 +35,13 @@ public class InteriorScreen implements Screen, InputProcessor {
 	private Furniture interactee;
 
 	
-	public InteriorScreen(final Sim game, MainChar main, TiledMap map, ArrayList<String> inside){
+	public InteriorScreen(final Sim game, MainChar main, TiledMap map, ArrayList<String[]> inside){
 		this.game=game;
 		screenHeight=Gdx.graphics.getHeight();
 		screenWidth=Gdx.graphics.getWidth();
 		furnishing=new ArrayList<Furniture>();
-		for(String s:inside){
-			furnishing.add(new Furniture(this, Gdx.files.internal(s)));
+		for(String[] s:inside){
+			furnishing.add(new Furniture(this, Gdx.files.internal(s[0]),s[1],s[2]));
 		}
 		
 		//load map
@@ -51,7 +51,7 @@ public class InteriorScreen implements Screen, InputProcessor {
 		base=(TiledMapTileLayer)current.getLayers().get(0);
 		
 		//set up camera
-		camera=new OrthoCamera(base);
+		camera=new OrthoCamera(base,scale);
 		camera.setToOrtho(false,screenWidth/32,screenHeight/32);
 		camera.position.set(camera.viewportWidth/2f-6.5f, camera.viewportHeight/2f-1f, 0);
 		camera.update();
@@ -86,22 +86,22 @@ public class InteriorScreen implements Screen, InputProcessor {
 		
 		//set direction of movement
 		
-		case Input.Keys.UP: 
+		case Input.Keys.W: 
 			getMain().setMoveUp(true);
 			getMain().setMoveDown(false);
 			break;
 			
-		case Input.Keys.DOWN:
+		case Input.Keys.S:
 			getMain().setMoveDown(true);
 			getMain().setMoveUp(false);
 			break;
 			
-		case Input.Keys.LEFT: 
+		case Input.Keys.A: 
 			getMain().setMoveLeft(true);
 			getMain().setMoveRight(false);
 			break;
 			
-		case Input.Keys.RIGHT: 
+		case Input.Keys.D: 
 			getMain().setMoveRight(true);
 			getMain().setMoveLeft(false);
 			break;
@@ -133,16 +133,16 @@ public class InteriorScreen implements Screen, InputProcessor {
 		//stop movement if key lifted
 		switch(keycode){
 		
-		case Input.Keys.UP:
+		case Input.Keys.W:
 			getMain().setMoveUp(false);
 		
-		case Input.Keys.DOWN:
+		case Input.Keys.S:
 			getMain().setMoveDown(false);
 		
-		case Input.Keys.LEFT:
+		case Input.Keys.A:
 			getMain().setMoveLeft(false);
 		
-		case Input.Keys.RIGHT:
+		case Input.Keys.D:
 			getMain().setMoveRight(false);
 		}
 		

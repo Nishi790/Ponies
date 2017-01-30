@@ -1,1 +1,1 @@
-Twilight's_library.png;10;10;TwilightLibrary.tmx;
+Twilight's_library.png;25;25;TwilightLibrary.tmx;Bed.txt;14;15

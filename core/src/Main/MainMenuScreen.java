@@ -28,6 +28,7 @@ public class MainMenuScreen implements Screen {
 	Skin skin;
 	Table layout;
 	Table buttons;
+	Texture[] chars;
 	
 	public MainMenuScreen(final Sim game){
 		this.game=game;
@@ -37,17 +38,22 @@ public class MainMenuScreen implements Screen {
 		skin=new Skin(Gdx.files.internal("data/skin/terra-mother-ui.json"),
 				new TextureAtlas(Gdx.files.internal("data/skin/terra-mother-ui.atlas")));
 		
+		chars=new Texture[4];
+		chars[0]=new Texture(Gdx.files.internal("data/Sprites/VinylScratch.png"));
+		chars[1]=new Texture(Gdx.files.internal("data/Sprites/base walk.png"));
+		chars[2]=new Texture(Gdx.files.internal("data/Sprites/Drizzle.png"));
+		chars[3]=new Texture(Gdx.files.internal("data/Sprites/EarthPony.png"));
 		skin.add("unicorn", 
-				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/VinylScratch.png"))));
+				new TextureRegion(chars[0],128,128));
 		
 		skin.add("pegasus", 
-				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/Derpy.png"))));
+				new TextureRegion(chars[1],128,128));
 		
 		skin.add("pegasusWalk", 
-				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/Drizzle.png"))));
+				new TextureRegion(chars[2],128,128));
 		
 		skin.add("pony", 
-				new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/EarthPony.png"))));
+				new TextureRegion(chars[3],128,128));
 
 		
 		welcome=new Label("Welcome to PonyLife!", skin);
@@ -62,7 +68,7 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.main=new GameScreen(game,new Sprite(skin.getRegion("unicorn")));
+				game.main=new GameScreen(game,chars[0], "Vinyl Scratch");
 				game.setScreen(game.main);
 			}
 		});
@@ -72,7 +78,7 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.main=new GameScreen(game,new Sprite(skin.getRegion("pegasus")));
+				game.main=new GameScreen(game,chars[1], "Derpy");
 				game.setScreen(game.main);
 			}
 		});
@@ -82,7 +88,7 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.main=new GameScreen(game,new Sprite(skin.getRegion("pegasusWalk")));
+				game.main=new GameScreen(game,chars[2], "Drizzle");
 				game.setScreen(game.main);
 			}
 		});
@@ -92,7 +98,7 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.main=new GameScreen(game,new Sprite(skin.getRegion("pony")));
+				game.main=new GameScreen(game,chars[3], "SoccerPony");
 				game.setScreen(game.main);
 			}
 		});

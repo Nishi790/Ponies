@@ -1,0 +1,1 @@
+Table:1:6:Bistro Table.png:Would you like to buy some food for 6 bits?:6
