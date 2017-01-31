@@ -34,7 +34,7 @@ public class Furniture {
 		message=info[4];
 		cost=Integer.parseInt(info[5]);
 		image.setPosition(Float.parseFloat(x),Float.parseFloat(y));
-		image.setSize(image.getWidth()/16,image.getHeight()/32);
+		image.setSize(image.getWidth()/16,image.getHeight()/16);
 	}
 	
 	public void interactWith(){

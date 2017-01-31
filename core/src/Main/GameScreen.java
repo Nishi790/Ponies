@@ -27,6 +27,7 @@ import battleEngine.BattleScreen;
 import battleEngine.Monster;
 import dialogEngine.DialogBox;
 import interactable.Building;
+import interactable.Entrance;
 import inventory.Inventory;
 
 public class GameScreen implements Screen, InputProcessor {
@@ -47,7 +48,7 @@ public class GameScreen implements Screen, InputProcessor {
 	HUD hud;
 	ArrayList<Building> buildings;
 	ArrayList<Rectangle> collisions;
-	ArrayList<Rectangle> entrances;
+	ArrayList<Entrance> entrances;
 	Animation<TextureRegion> ani;
 	float animationtime=0;
 	
@@ -60,11 +61,7 @@ public class GameScreen implements Screen, InputProcessor {
 		//load map
 		current=new TmxMapLoader().load("data/Maps/map.tmx");
 		buildings=new ArrayList<Building>();
-		String[] temporary=Gdx.files.internal("data/Maps/mapBuildings.txt").readString().split(":");
-		//for(String s:temporary){
-			//Building b=new Building(Gdx.files.internal("data/Buildings/"+s));
-			//buildings.add(b);
-		//}
+		
 		float scale=1/32f;
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(current,scale);
 		base=(TiledMapTileLayer)current.getLayers().get(1);
@@ -77,7 +74,7 @@ public class GameScreen implements Screen, InputProcessor {
 		camera.update();
 		
 		collisions=new ArrayList<Rectangle>();
-		entrances=new ArrayList<Rectangle>();
+		entrances=new ArrayList<Entrance>();
 		TiledMapTileLayer build=(TiledMapTileLayer)current.getLayers().get(3);
 		TiledMapTileLayer coll=(TiledMapTileLayer)current.getLayers().get(0);
 		for(int i=0; i<build.getWidth();i++){
@@ -91,10 +88,17 @@ public class GameScreen implements Screen, InputProcessor {
 							Rectangle temp=new Rectangle(i,j+1,build.getTileWidth()*scale,build.getTileHeight()*scale);
 							collisions.add(temp);
 						}
-						Object enter=a.getProperties().get("Entrance");
-						if(enter!=null){
-							Rectangle temp=new Rectangle(i,j+1,build.getTileWidth()*scale,build.getTileHeight()*scale);
-							entrances.add(temp);
+						
+						Object buildName=a.getProperties().get("buildingName");
+						if(buildName!=null){
+							Building b=new Building(Gdx.files.internal("data/Buildings/"+buildName+".txt"));
+							buildings.add(b);
+							Object enter=a.getProperties().get("Entrance");
+							if(enter!=null){
+								Rectangle temp=new Rectangle(i,j+1,build.getTileWidth()*scale,build.getTileHeight()*scale);
+								Entrance e=new Entrance(b,temp);
+								entrances.add(e);
+							}
 						}
 					}
 				}
@@ -181,12 +185,7 @@ public class GameScreen implements Screen, InputProcessor {
 			}
 		}
 		
-		//draw Buildings
-		if(!buildings.isEmpty()){
-			for(Building b: buildings){
-				b.getSprite().draw(game.batch);
-			}
-		}
+		//temporary animation tester
 		animationtime=animationtime+Gdx.graphics.getDeltaTime();
 		TextureRegion animation=ani.getKeyFrame(animationtime);
 		game.batch.draw(animation, 5, 5, 4, 4);
@@ -412,6 +411,11 @@ public class GameScreen implements Screen, InputProcessor {
 					main.setMoveRight(false);
 					main.avatar.setX(main.avatar.getX()-10*Gdx.graphics.getDeltaTime());
 				}
+			}
+		}
+		for(Entrance e: entrances){
+			if(main.avatar.getBoundingRectangle().overlaps(e.getEntrance())){
+				e.enter(main, game);
 			}
 		}
 	}

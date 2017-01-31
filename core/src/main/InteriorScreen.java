@@ -61,6 +61,7 @@ public class InteriorScreen implements Screen, InputProcessor {
 		origX=main.avatar.getX();
 		origY=main.avatar.getY();
 		main.avatar.setPosition(5, 2);
+		main.avatar.setSize(4, 4);
 		npcs=new ArrayList<NPC>();
 		
 		//npcData=new com.badlogic.gdx.files.FileHandle[]{Gdx.files.internal("data/NPCs/Pinkie.txt"), 
@@ -119,7 +120,8 @@ public class InteriorScreen implements Screen, InputProcessor {
 			
 		//Exit building by pressing e
 		case Input.Keys.E:
-			getMain().avatar.setPosition(origX, origY);
+			getMain().avatar.setPosition(origX, origY-3);
+			getMain().avatar.setSize(2, 2);
 			game.setScreen(game.main);
 			break;
 			
@@ -306,7 +308,6 @@ public class InteriorScreen implements Screen, InputProcessor {
 		getHud().dispose();
 		tiledMapRenderer.dispose();
 		current.dispose();
-		display.dispose();
 		invi.dispose();
 		
 	}

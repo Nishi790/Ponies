@@ -13,7 +13,6 @@ import main.MainChar;
 import main.Sim;
 
 public class Building {
-	private final Sprite sprite;
 	TiledMap inside;
 	FileHandle file;
 	ArrayList<String[]> furniture;
@@ -24,14 +23,11 @@ public class Building {
 		//parse file
 		String inf=file.readString();
 		String[] temp=inf.split(";");
-		sprite=new Sprite(new Texture(Gdx.files.internal("data/Buildings/"+temp[0])));//image of building
-		getSprite().setPosition(Integer.parseInt(temp[1]), Integer.parseInt(temp[2]));//x,y position
-		getSprite().setSize(sprite.getWidth()/16, sprite.getHeight()/16);//scale building
-		inside=new TmxMapLoader().load("data/Maps/"+temp[3]);//interior map
+		inside=new TmxMapLoader().load("data/Maps/"+temp[0]);//interior map
 		
 		//generate inside furniture
 		furniture=new ArrayList<String[]>();
-		for(int i=4; i<temp.length; i=i+3){
+		for(int i=1; i<temp.length; i=i+3){
 			furniture.add(new String[]{"data/Furniture/"+temp[i], temp[i+1], temp[i+2]});
 		}
 	}
@@ -41,10 +37,6 @@ public class Building {
 		game.setScreen(new InteriorScreen(game, main, inside, furniture));
 	}
 	
-
-	public Sprite getSprite() {
-		return sprite;
-	}
 	
 	
 }

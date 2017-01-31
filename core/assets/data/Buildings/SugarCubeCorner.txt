@@ -1,1 +1,1 @@
-SugarCube Corner.png;20;25;SugarCubeCorner.tmx;Cupcake Counter.txt;1;16;Bistro Table.txt;14;8.5;Bistro Table.txt;13;15
+SugarCubeCorner.tmx;Cupcake Counter.txt;1;16;Bistro Table.txt;14;8.5;Bistro Table.txt;13;15

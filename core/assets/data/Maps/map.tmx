@@ -383,21 +383,25 @@
   <tile id="98">
    <properties>
     <property name="Entrance" type="bool" value="true"/>
+    <property name="buildingName" value="TownHall"/>
    </properties>
   </tile>
   <tile id="99">
    <properties>
     <property name="Entrance" type="bool" value="true"/>
+    <property name="buildingName" value="TownHall"/>
    </properties>
   </tile>
   <tile id="100">
    <properties>
     <property name="Entrance" type="bool" value="true"/>
+    <property name="buildingName" value="TownHall"/>
    </properties>
   </tile>
   <tile id="101">
    <properties>
     <property name="Entrance" type="bool" value="true"/>
+    <property name="buildingName" value="TownHall"/>
    </properties>
   </tile>
   <tile id="102">
@@ -566,12 +570,13 @@
   <tile id="44">
    <properties>
     <property name="Entrance" type="bool" value="true"/>
+    <property name="buildingName" value="SugarCubeCorner"/>
    </properties>
   </tile>
   <tile id="45">
    <properties>
     <property name="Entrance" type="bool" value="true"/>
-    <property name="building" type="bool" value="false"/>
+    <property name="buildingName" value="SugarCubeCorner"/>
    </properties>
   </tile>
   <tile id="46">
@@ -785,16 +790,19 @@
   <tile id="43">
    <properties>
     <property name="Entrance" type="bool" value="true"/>
+    <property name="buildingName" value="TwilightLibrary"/>
    </properties>
   </tile>
   <tile id="44">
    <properties>
     <property name="Entrance" type="bool" value="true"/>
+    <property name="buildingName" value="TwilightLibrary"/>
    </properties>
   </tile>
   <tile id="45">
    <properties>
     <property name="Entrance" type="bool" value="true"/>
+    <property name="buildingName" value="TwilightLibrary"/>
    </properties>
   </tile>
   <tile id="46">

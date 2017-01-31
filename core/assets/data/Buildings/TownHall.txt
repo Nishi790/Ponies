@@ -1,1 +1,1 @@
-TownHall.png;80;100;TwilightLibrary.tmx
+TwilightLibrary.tmx
