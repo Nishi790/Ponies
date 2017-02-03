@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import battleEngine.Attack;
 import inventory.Item;
 import quests.Quest;
 
@@ -29,7 +30,7 @@ public class MainChar {
 	int accuracy;
 	ArrayList<Quest> activeQuests;
 	private ArrayList<Item> inventory;
-	ArrayList<Action> moves;
+	ArrayList<Attack> moves;
 	private MainChar[] partyMembers;
 	
 	float time=0;
@@ -72,7 +73,8 @@ public class MainChar {
 		accuracy=70;
 		minDamage=5;
 		maxDamage=15;
-		moves=new ArrayList<Action>();
+		moves=new ArrayList<Attack>();
+
 		
 	}
 	
@@ -149,7 +151,7 @@ public class MainChar {
 	
 	public double getHP(){return points[0];}
 	
-	public ArrayList<Action> getMoves(){
+	public ArrayList<Attack> getMoves(){
 		return moves;
 	}
 	

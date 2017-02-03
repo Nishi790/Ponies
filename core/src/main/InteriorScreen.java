@@ -122,7 +122,7 @@ public class InteriorScreen implements Screen, InputProcessor {
 		case Input.Keys.E:
 			getMain().avatar.setPosition(origX, origY-3);
 			getMain().avatar.setSize(2, 2);
-			game.setScreen(game.main);
+			game.setScreen(game.getMainScreen());
 			break;
 			
 		}
@@ -196,7 +196,7 @@ public class InteriorScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		System.out.println("Show room");
 		
 	}
 

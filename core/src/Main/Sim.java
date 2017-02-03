@@ -35,4 +35,11 @@ public class Sim extends Game {
 		batch.dispose();
 		font.dispose();
 	}
+	
+	public GameScreen getMainScreen(){return main;}
+
+	public void setMainScreen(GameScreen gameScreen) {
+		main=gameScreen;
+		
+	}
 }

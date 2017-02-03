@@ -68,7 +68,7 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.main=new GameScreen(game,chars[0], "Vinyl Scratch");
+				game.setMainScreen(new GameScreen(game,chars[0], "Vinyl Scratch"));
 				game.setScreen(game.main);
 			}
 		});
@@ -78,7 +78,7 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.main=new GameScreen(game,chars[1], "Derpy");
+				game.setMainScreen(new GameScreen(game,chars[1], "Derpy"));
 				game.setScreen(game.main);
 			}
 		});
@@ -88,7 +88,7 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.main=new GameScreen(game,chars[2], "Drizzle");
+				game.setMainScreen(new GameScreen(game,chars[2], "Drizzle"));
 				game.setScreen(game.main);
 			}
 		});
@@ -98,7 +98,7 @@ public class MainMenuScreen implements Screen {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.main=new GameScreen(game,chars[3], "SoccerPony");
+				game.setMainScreen(new GameScreen(game,chars[3], "SoccerPony"));
 				game.setScreen(game.main);
 			}
 		});

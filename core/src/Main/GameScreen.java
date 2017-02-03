@@ -137,11 +137,11 @@ public class GameScreen implements Screen, InputProcessor {
 
 		}
 		//Temporary animation test
-		TextureRegion sheet=new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/proing.png")),128,768);
-		TextureRegion[] sprites=new TextureRegion[]{new TextureRegion(sheet,0,0,128,128),new TextureRegion(sheet,0,128,128,128), 
-				new TextureRegion(sheet,0,256,128,128), new TextureRegion(sheet,0,384,128,128), new TextureRegion(sheet,0,512,128,128)};
-		ani=new Animation<TextureRegion>(0.1f,sprites);
-		ani.setPlayMode(PlayMode.LOOP);
+		//TextureRegion sheet=new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/proing.png")),128,768);
+		//TextureRegion[] sprites=new TextureRegion[]{new TextureRegion(sheet,0,0,128,128),new TextureRegion(sheet,0,128,128,128), 
+				//new TextureRegion(sheet,0,256,128,128), new TextureRegion(sheet,0,384,128,128), new TextureRegion(sheet,0,512,128,128)};
+		//ani=new Animation<TextureRegion>(0.1f,sprites);
+		//ani.setPlayMode(PlayMode.LOOP);
 		
 		//create input processor
 		Gdx.input.setInputProcessor(this);
@@ -149,8 +149,7 @@ public class GameScreen implements Screen, InputProcessor {
 	}
 	
 	@Override
-	public void show() {
-		// TODO Auto-generated method stub
+	public void show() {	
 		
 	}
 
@@ -186,9 +185,9 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		
 		//temporary animation tester
-		animationtime=animationtime+Gdx.graphics.getDeltaTime();
-		TextureRegion animation=ani.getKeyFrame(animationtime);
-		game.batch.draw(animation, 5, 5, 4, 4);
+		//animationtime=animationtime+Gdx.graphics.getDeltaTime();
+		//TextureRegion animation=ani.getKeyFrame(animationtime);
+		//game.batch.draw(animation, 5, 5, 4, 4);
 		
 		game.batch.end();
 		
@@ -289,7 +288,7 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		//temporary, to allow easy testing of battle screen
 		case Input.Keys.B:
-			game.setScreen(new BattleScreen(game, main, "TempBG", new Monster(Gdx.files.internal("data/Monsters/Slime.txt"))));
+			game.setScreen(new BattleScreen(game, main, "TempBG", new Monster(Gdx.files.internal("data/Monsters/Slime.txt")), "data/Maps/battlegrid.tmx"));
 			break;
 		}
 
@@ -361,7 +360,7 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	
 	//check collisions with NPCs, stop from walking through them; if colliding with NPC, enter dialog with them
-	//Check collisions with buildings; if colliding from the bottom, enter building
+	//Check collisions with buildings
 	public void block(){
 
 		for(NPC n: npcs){

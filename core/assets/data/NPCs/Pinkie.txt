@@ -1,5 +1,5 @@
 PinkieTasks.txt;
-50;
+55;
 60;
 pinkie.png;
 50
