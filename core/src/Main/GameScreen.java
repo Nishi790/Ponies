@@ -137,11 +137,11 @@ public class GameScreen implements Screen, InputProcessor {
 
 		}
 		//Temporary animation test
-		//TextureRegion sheet=new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/proing.png")),128,768);
-		//TextureRegion[] sprites=new TextureRegion[]{new TextureRegion(sheet,0,0,128,128),new TextureRegion(sheet,0,128,128,128), 
+		/*TextureRegion sheet=new TextureRegion(new Texture(Gdx.files.internal("data/Sprites/proing.png")),128,768);
+		TextureRegion[] sprites=new TextureRegion[]{new TextureRegion(sheet,0,0,128,128),new TextureRegion(sheet,0,128,128,128), 
 				//new TextureRegion(sheet,0,256,128,128), new TextureRegion(sheet,0,384,128,128), new TextureRegion(sheet,0,512,128,128)};
-		//ani=new Animation<TextureRegion>(0.1f,sprites);
-		//ani.setPlayMode(PlayMode.LOOP);
+		ani=new Animation<TextureRegion>(0.1f,sprites);
+		ani.setPlayMode(PlayMode.LOOP);*/
 		
 		//create input processor
 		Gdx.input.setInputProcessor(this);
@@ -288,7 +288,7 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		//temporary, to allow easy testing of battle screen
 		case Input.Keys.B:
-			game.setScreen(new BattleScreen(game, main, "TempBG", new Monster(Gdx.files.internal("data/Monsters/Slime.txt")), "data/Maps/battlegrid.tmx"));
+			game.setScreen(new BattleScreen(game, main, "TempBG", new Monster("Slime",700,100), "data/Maps/battlegrid.tmx"));
 			break;
 		}
 

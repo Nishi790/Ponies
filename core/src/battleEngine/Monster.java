@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Monster extends BattleCharacter {
 	
-	public Monster(FileHandle f){
-		super(f);
+	public Monster(String f, int x, int y){
+		super(f,x,y);
 	}
 	
 

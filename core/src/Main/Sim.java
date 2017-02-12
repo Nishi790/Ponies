@@ -3,6 +3,10 @@ package main;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -22,6 +26,10 @@ public class Sim extends Game {
 		manager=new AssetManager();
 		TextureAtlas atlas=new TextureAtlas(Gdx.files.internal("data/skin/terra-mother-ui.atlas"));
 		skin=new Skin(Gdx.files.internal("data/skin/terra-mother-ui.json"),atlas);
+		Pixmap pixmap = new Pixmap(80, 80, Format.RGBA8888);
+		pixmap.setColor(Color.WHITE);
+		pixmap.fill();
+		skin.add("highlight", new Texture(pixmap));
 		this.setScreen(new MainMenuScreen(this));
 	}
 

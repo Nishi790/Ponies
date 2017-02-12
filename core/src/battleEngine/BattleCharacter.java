@@ -8,10 +8,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import main.LoadScript;
 import main.MainChar;
 
 public class BattleCharacter extends Actor implements Comparable<BattleCharacter> {
@@ -21,46 +23,59 @@ public class BattleCharacter extends Actor implements Comparable<BattleCharacter
 	double currenthp, currentmp;
 	ArrayList<Attack> moves;
 	Sprite restingState;
-	FileHandle data;
 	Random generator;
 	int initiative;
 	int speed;
-	int defence=10;
+	int defence;
+	int[] size;
 	Attack currentAttack=null;
 	boolean attacking=false;
 	boolean defeated=false;
+	BitmapFont labeller;
+	private LoadScript script;
 	
 	
-	public BattleCharacter(FileHandle f){
-		data=f;
-		String[] info=f.readString().split(";");
-		name=info[0];
-		restingState=new Sprite(new Texture(Gdx.files.internal("data/Monsters/"+info[1])));
-		restingState.setSize(Float.parseFloat(info[2]), Float.parseFloat(info[3]));
-		this.setPosition(Float.parseFloat(info[4]), Float.parseFloat(info[5]));
-		generator=new Random();
-		//generates random hp value between the given min and max values
-		maxhp=generator.nextInt(Integer.parseInt(info[7])-Integer.parseInt(info[6]))+Integer.parseInt(info[6]); 
-		//generates random mp total between the given min and max values
-		if(Integer.parseInt(info[9])-Integer.parseInt(info[8])>0){
-			maxmp=generator.nextInt()+Integer.parseInt(info[8]);
-		}
-		else maxmp=0;
+	public BattleCharacter(String name, int x, int y){
+		this.name=name;
+		moves=new ArrayList<Attack>();
+		script=new LoadScript(name+".lua", this);
+		script.executeInit();
+		setXpos(x);
+		setYpos(y);
 		currenthp=maxhp;
 		currentmp=maxmp;
-		initiative=generator.nextInt(21);
-		moves=new ArrayList<Attack>();
-		for(int i=10; i<info.length;i++){
-			if(info[i].contains("Attack")){
-				Attack a=new Attack(Gdx.files.internal("data/Monsters/"+info[i]), this);
-				moves.add(a);
-			}
-			else if (info[i].contains("Spell")){
-				Spell s=new Spell(Gdx.files.internal("data/Monsters/"+info[i]), this);
-				moves.add(s);
-			}
-		}
+		generator=new Random();
+		labeller=new BitmapFont();
+		initiative=generator.nextInt(21)+speed;
 	}
+	
+	public void setMaxHp(int hp){maxhp=hp;}
+	public void setMaxMp(int mp){maxmp=mp;}
+	public void setCurrentHp(float hp){currenthp=hp;}
+	public void setCurrentMp(float mp){currentmp=mp;}
+	public void setDefence(int def){defence=def;}
+	public void setSpeed(int spd){speed=spd;}
+	public void setsize(int width, int height){
+		size=new int[]{width,height};
+		restingState.setSize(width, height);
+		this.setSize(width, height);
+	}
+	public void setRestingState(String filename){
+		restingState=new Sprite(new Texture(Gdx.files.internal("data/"+filename)));
+	}
+	public void setXpos(float x){
+		restingState.setX(x);
+		this.setX(x);
+		}
+	public void setYpos(float y){
+		restingState.setY(y);
+		this.setY(y);
+		}
+	public void createAttack(String file, BattleCharacter b){
+		moves.add(new Attack(Gdx.files.internal("data/Monsters/"+file), b));
+	}
+	
+	public String getname(){return name;}
 	
 	public BattleCharacter(MainChar main, int index){
 		name=main.name;
@@ -78,18 +93,21 @@ public class BattleCharacter extends Actor implements Comparable<BattleCharacter
 		moves.add(temp);
 		
 		speed=5;
-		Random r=new Random();
-		initiative=r.nextInt(21)+speed;
+		generator=new Random();
+		initiative=generator.nextInt(21)+speed;
+		labeller=new BitmapFont();
 		
 	}
 	
 	public void draw(Batch b){
 		if(attacking){
 			b.draw(currentAttack.currentFrame,this.getX(),this.getY(), restingState.getWidth(),restingState.getHeight());
+			labeller.draw(b, currenthp+"/"+maxhp+" HP", this.getX(),this.getY()+restingState.getHeight()+5);
 		}
 		else{ 
 			restingState.setPosition(this.getX(), this.getY());
 			restingState.draw(b);
+			labeller.draw(b, currenthp+"/"+maxhp+" HP", this.getX(),this.getY()+restingState.getHeight()+5);
 		}
 
 	}

@@ -11,19 +11,26 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeType.Bitmap;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -56,6 +63,9 @@ public class BattleScreen implements Screen{
 	Table messageTable;
 	Table defeat;
 	Table flee;
+	Table win;
+	ArrayList<Button> targets;
+	boolean ranged;
 	boolean[] tables=new boolean[]{false,false,false,false};
 	boolean playerTurn;
 	TextButton[] mainbuttons;
@@ -114,6 +124,8 @@ public class BattleScreen implements Screen{
 		//set input processor to take input from stage
 		Gdx.input.setInputProcessor(stage);
 		
+		targets=new ArrayList<Button>();
+		
 		//set the current active Character to the first character in initiative order
 		activeCharacter=initiativeOrder.get(0);
 		
@@ -131,8 +143,8 @@ public class BattleScreen implements Screen{
 		
 		//create buttons for each menu item
 		for(int i=0;i<mainChoices.length;i++){
-			TextButton b=new TextButton(mainChoices[i], new TextButton.TextButtonStyle(game.skin.getDrawable("label-hp-black"), 
-					game.skin.getDrawable("window-c"), game.skin.getDrawable("window-c"), 
+			TextButton b=new TextButton(mainChoices[i], new TextButton.TextButtonStyle(game.skin.newDrawable("highlight", Color.BLACK), 
+					game.skin.newDrawable("highlight", Color.BLACK), game.skin.getDrawable("window-c"), 
 					game.skin.getFont("giygas")));
 			
 			if(i==0){
@@ -146,13 +158,18 @@ public class BattleScreen implements Screen{
 			}
 			
 			final int j=i;
-			b.addListener(new ChangeListener(){
+			b.addListener(new ClickListener(){
 				
 				//if the table is visible, set invisible, if invisible, set visible
 				@Override
-				public void changed(ChangeEvent event, Actor actor) {
-					if(tables[j]) tables[j]=false;
-					else tables[j]=true;
+				public void clicked(InputEvent event, float x, float y) {
+					stage.addActor(lowerTables[j]);
+					for(int i=0; i<tables.length;i++){
+						if(i!=j&&lowerTables[i]!=null){
+							lowerTables[i].remove();
+							((Button)leftTable.getCells().get(i).getActor()).setChecked(false);
+						}
+					}
 				}
 				
 			});
@@ -223,6 +240,26 @@ public class BattleScreen implements Screen{
 		defeat.row();
 		defeat.add(toTown);
 		
+		//create table to be displayed if all monsters are defeated
+		win=new Table();
+		Label winner=new Label("You have defeated your enemies!", game.skin.get("giygas", Label.LabelStyle.class));
+			
+		//create button to return to central area of main map (the town)
+		TextButton map=new TextButton("Return to Map", game.skin);
+		map.pad(20,0,20,0);
+		map.addListener(new ChangeListener(){
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				main.setHP(playerCharacter.currenthp);
+				game.setScreen(game.getMainScreen());
+				Gdx.input.setInputProcessor(game.getMainScreen());
+			}
+		});
+		win.add(winner);
+		win.row();
+		win.add(map);
+	
 	}
 	
 	private void flee(){
@@ -234,6 +271,10 @@ public class BattleScreen implements Screen{
 		messageTable.add(defeat);
 	}
 	
+	private void win(){
+		messageTable.add(win);
+	}
+	
 	
 	private void movementTable(Table t){
 		
@@ -241,7 +282,7 @@ public class BattleScreen implements Screen{
 			
 			//create button for each possible type of movement
 			final TextButton b=new TextButton(moveChoices[i], 
-					new TextButton.TextButtonStyle(game.skin.getDrawable("label-hp-black"), game.skin.getDrawable("label-hp-black"), 
+					new TextButton.TextButtonStyle(game.skin.newDrawable("highlight", Color.BLACK), game.skin.newDrawable("highlight",Color.BLACK), 
 					game.skin.getDrawable("window-c"), game.skin.getFont("year199x")));
 			final int j=i;
 			b.addListener(new ClickListener(){
@@ -255,19 +296,22 @@ public class BattleScreen implements Screen{
 					if(temp[0].equalsIgnoreCase("left")){
 						activeCharacter.setX(activeCharacter.getX()-100*Integer.parseInt(temp[1]));
 						b.setChecked(false);
+						((Button) leftTable.getCells().get(0).getActor()).setChecked(false);
 					}
 					else if(temp[0].equalsIgnoreCase("right")){
 						activeCharacter.setX(activeCharacter.getX()+100*Integer.parseInt(temp[1]));
 						b.setChecked(false);
-						System.out.println("RIGHT");
+						((Button) leftTable.getCells().get(0).getActor()).setChecked(false);
 					}
 					else if(temp[0].equalsIgnoreCase("up")){
 						activeCharacter.setY(activeCharacter.getY()+100*Integer.parseInt(temp[1]));
 						b.setChecked(false);
+						((Button) leftTable.getCells().get(0).getActor()).setChecked(false);
 					}
 					else if(temp[0].equalsIgnoreCase("down")){
 						activeCharacter.setY(activeCharacter.getY()-100*Integer.parseInt(temp[1]));
 						b.setChecked(false);
+						((Button) leftTable.getCells().get(0).getActor()).setChecked(false);
 					}
 					
 					//switch initiative to next character
@@ -295,20 +339,52 @@ public class BattleScreen implements Screen{
 		//add all ranged moves to the table
 		for(Attack a:current.moves){
 			if(a.type.equalsIgnoreCase("range")){
-				final TextButton b=new TextButton(a.name,new TextButton.TextButtonStyle(game.skin.getDrawable("label-hp-black"), game.skin.getDrawable("label-hp-black"), 
+				final TextButton b=new TextButton(a.name,new TextButton.TextButtonStyle(game.skin.newDrawable("highlight", Color.BLACK), game.skin.newDrawable("highlight", Color.BLACK), 
 					game.skin.getDrawable("window-c"), game.skin.getFont("year199x")));
 				final Attack j=a;
 				b.addListener(new ClickListener(){
 					
 					@Override
 					public void clicked(InputEvent event, float x, float y){
-						//code to highlight squares that you can attack with this move and create buttons on each
+						ranged=true;
+						for(Monster m:monsters){
+							if(Math.abs(m.getX()-activeCharacter.getX())<=100*j.range&&m.getY()==activeCharacter.getY()){
+								final Monster mon=m;
+								
+								//create bright square around targetable enemies
+								Button target=new Button(game.skin.newDrawable("highlight", 1,1,1,0.3f));
+								target.setPosition(m.getX(), m.getY());
+								target.setSize(100,100);
+								target.addListener(new ClickListener(){
+									//if square is clicked, attack the monster in the square, set ranged to false, and move on to next attacker
+									@Override
+									public void clicked(InputEvent event, float x, float y){
+										j.attack(mon);
+										ranged=false;
+										lowerTables[2].remove();
+										((Button)leftTable.getCells().get(2).getActor()).setChecked(false);
+										b.setChecked(false);
+										toNextAttacker();
+										for (int i=0;i<targets.size();i++){
+											targets.get(i).remove();
+											targets.remove(i);
+										}
+									}
+								});
+								targets.add(target);
+								
+							}
+						}
 					}
 				});
 				b.pad(5, 30, 5, 30);
 				lowerTables[2].add(b);
 				lowerTables[2].row();
 			}
+			
+		}
+		for(Cell c: lowerTables[2].getCells()){
+			((Button) c.getActor()).setChecked(false);
 		}
 	}
 	
@@ -359,6 +435,19 @@ public class BattleScreen implements Screen{
 			lose();
 		}
 		
+		//create int equivalent to number of monsters, decrement
+		//test if all monsters are dead, if so, call win
+		
+		int kill=monsters.size();
+		
+		for(Monster m: monsters){
+			if(m.defeated)kill--;
+		}
+		
+		if(kill==0){
+			win();
+		}
+		
 		//clear screen
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -406,19 +495,16 @@ public class BattleScreen implements Screen{
 
 		game.batch.end();
 		
-		//show the table related to the selected menu item
-		for(int i=0;i<tables.length;i++){
-			if(tables[i]){
-				stage.addActor(lowerTables[i]);
+		if(ranged){
+			for(Button b:targets){
+				stage.addActor(b);
+				b.toFront();
 			}
-			//hide deselected tables
-			else{
-				if(stage.getActors().contains(lowerTables[i], true)){
-					lowerTables[i].remove();
-					tables[i]=false;
-				}
+		}
+		else{
+			for(Button b: targets){
+				b.remove();
 			}
-				
 		}
 		//draw menus on stage
 		stage.draw();
@@ -433,7 +519,6 @@ public class BattleScreen implements Screen{
 						activeCharacter.currentAttack=a;
 						activeCharacter.attacking=true;
 						a.attack(party.get(0));
-						System.out.println(party.get(0).currenthp+" HP");
 					}
 					else {
 						a.act(Gdx.graphics.getDeltaTime(),this);
@@ -442,19 +527,16 @@ public class BattleScreen implements Screen{
 				//if more than 2 squares away, move closer
 				else if(activeCharacter.getX()-party.get(0).getX()>=208){
 					activeCharacter.setX(activeCharacter.getX()-100);
-					System.out.println("move left");
 					toNextAttacker();
 				}
 				//if above player character, move down
 				else if(activeCharacter.getY()>party.get(0).getY()){
 					activeCharacter.setY(activeCharacter.getY()-100);
-					System.out.println("move down");
 					toNextAttacker();
 				}
 				//if below player character, move up
 				else if(activeCharacter.getY()<party.get(0).getY()){
 					activeCharacter.setY(activeCharacter.getY()+100);
-					System.out.println("move up");
 					toNextAttacker();
 				}
 			}

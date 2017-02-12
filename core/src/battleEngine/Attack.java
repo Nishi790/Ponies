@@ -76,6 +76,7 @@ public class Attack extends Action {
 		if(hit>=18){
 			critical=true;
 			damage=calculateDamage();
+			critical=false;
 		}
 		else if(hit+accuracy>target.defence){
 			damage=calculateDamage();
